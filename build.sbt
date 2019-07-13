@@ -190,7 +190,7 @@ lazy val scalajavatimeTests = crossProject(JVMPlatform, JSPlatform)
         case Some((2, scalaMajor)) if scalaMajor == 13 =>
           Seq("org.scalatest" %%% "scalatest" % "3.0.8" % "test")
         case Some((2, scalaMajor)) if scalaMajor <= 12 && (scalaJSVersion.startsWith("0.6.")) =>
-          Seq("org.scalatest" %%% "scalatest" % "3.0.7" % "test")
+          Seq("org.scalatest" %%% "scalatest" % "3.0.8" % "test")
         case _ => Seq.empty
       }
     }
