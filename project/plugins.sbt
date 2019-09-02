@@ -1,5 +1,5 @@
 
-addSbtPlugin("com.47deg"  % "sbt-microsites" % "0.9.3")
+addSbtPlugin("com.47deg"  % "sbt-microsites" % "0.9.4")
 
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.5")
 
