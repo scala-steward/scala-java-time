@@ -31,7 +31,6 @@
  */
 package org.threeten.bp.format
 
-import org.scalatest.FunSuite
 import org.threeten.bp.AssertionsHelper
 import org.threeten.bp.Platform
 import org.threeten.bp.ZoneId
@@ -39,6 +38,7 @@ import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.internal.TTBPDateTimeFormatterBuilder
 import org.threeten.bp.temporal.TemporalQueries
 import org.threeten.bp.zone.ZoneRulesProvider
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test ZonePrinterParser. */
 object TestZoneIdParser {
@@ -46,7 +46,7 @@ object TestZoneIdParser {
   private val TIME_ZONE_DENVER: ZoneId = ZoneId.of(AMERICA_DENVER)
 }
 
-class TestZoneIdParser extends FunSuite with GenTestPrinterParser with AssertionsHelper {
+class TestZoneIdParser extends AnyFunSuite with GenTestPrinterParser with AssertionsHelper {
   val data_error: List[List[Any]] = {
     List(
       List(new TTBPDateTimeFormatterBuilder.ZoneIdPrinterParser(TemporalQueries.zoneId, null), "hello", -1, classOf[Platform.DFE]),

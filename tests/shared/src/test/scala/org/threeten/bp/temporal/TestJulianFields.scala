@@ -31,8 +31,8 @@
  */
 package org.threeten.bp.temporal
 
-import org.scalatest.FunSuite
 import org.threeten.bp.{AssertionsHelper, LocalDate}
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test. */
 object TestJulianFields {
@@ -42,7 +42,7 @@ object TestJulianFields {
   private val JAN01_0001: LocalDate = LocalDate.of(1, 1, 1)
 }
 
-class TestJulianFields extends FunSuite with AssertionsHelper {
+class TestJulianFields extends AnyFunSuite with AssertionsHelper {
   def data_samples: List[List[Any]] = {
     List(
       List(ChronoField.EPOCH_DAY, TestJulianFields.JAN01_1970, 0L),

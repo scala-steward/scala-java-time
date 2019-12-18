@@ -31,11 +31,11 @@
  */
 package org.threeten.bp.zone
 
-import org.scalatest.FunSuite
 import org.threeten.bp._
 import org.threeten.bp.temporal.ChronoUnit.HOURS
+import org.scalatest.funsuite.AnyFunSuite
 
-class TestZoneOffsetTransitionSerialization extends FunSuite with AssertionsHelper with AbstractTest {
+class TestZoneOffsetTransitionSerialization extends AnyFunSuite with AssertionsHelper with AbstractTest {
 
   test("getters_gap") {
     val before: LocalDateTime = LocalDateTime.of(2010, 3, 31, 1, 0)

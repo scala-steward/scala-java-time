@@ -31,7 +31,6 @@
  */
 package org.threeten.bp.format
 
-import org.scalatest.FunSuite
 import org.threeten.bp.AssertionsHelper
 import org.threeten.bp.temporal.ChronoField.DAY_OF_MONTH
 import org.threeten.bp.temporal.ChronoField.HOUR_OF_DAY
@@ -39,9 +38,10 @@ import org.threeten.bp.DateTimeException
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.internal.TTBPDateTimeFormatterBuilder
 import org.threeten.bp.temporal.MockFieldValue
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test SimpleNumberPrinterParser. */
-class TestNumberPrinter extends FunSuite with GenTestPrinterParser with AssertionsHelper {
+class TestNumberPrinter extends AnyFunSuite with GenTestPrinterParser with AssertionsHelper {
   test("print_emptyCalendrical") {
     assertThrows[DateTimeException] {
       val pp: TTBPDateTimeFormatterBuilder.NumberPrinterParser = new TTBPDateTimeFormatterBuilder.NumberPrinterParser(DAY_OF_MONTH, 1, 2, SignStyle.NEVER)

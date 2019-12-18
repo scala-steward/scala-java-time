@@ -38,9 +38,10 @@ import java.io.ObjectOutputStream
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.BeforeAndAfter
+import org.scalatest.funsuite.AnyFunSuite
 
-class TestLocalDateTimeSerialization extends FunSuite with AssertionsHelper with BeforeAndAfter {
+class TestLocalDateTimeSerialization extends AnyFunSuite with AssertionsHelper with BeforeAndAfter {
   private val TEST_2007_07_15_12_30_40_987654321: LocalDateTime = LocalDateTime.of(2007, 7, 15, 12, 30, 40, 987654321)
 
   test("serialization") {

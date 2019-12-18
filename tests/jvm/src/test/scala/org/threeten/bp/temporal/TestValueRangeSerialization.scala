@@ -33,11 +33,11 @@ package org.threeten.bp.temporal
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
 
-import org.scalatest.FunSuite
 import org.threeten.bp.{AbstractTest, AssertionsHelper}
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test. */
-class TestValueRangeSerialization extends FunSuite with AssertionsHelper with AbstractTest {
+class TestValueRangeSerialization extends AnyFunSuite with AssertionsHelper with AbstractTest {
   ignore("immutable") {
     assertImmutable(classOf[ValueRange])
   }

@@ -34,12 +34,12 @@ package org.threeten.bp
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
 import java.util.Locale
 
-import org.scalatest.FunSuite
 import org.threeten.bp.temporal.ChronoUnit._
 import org.threeten.bp.temporal.TemporalUnit
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test Duration. */
-class TestDuration extends FunSuite with AssertionsHelper {
+class TestDuration extends AnyFunSuite with AssertionsHelper {
 
   test("zero") {
     assertEquals(Duration.ZERO.getSeconds, 0L)

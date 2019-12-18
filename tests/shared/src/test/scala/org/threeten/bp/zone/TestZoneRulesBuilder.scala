@@ -31,7 +31,6 @@
  */
 package org.threeten.bp.zone
 
-import org.scalatest.FunSuite
 import org.threeten.bp.DayOfWeek.FRIDAY
 import org.threeten.bp.DayOfWeek.MONDAY
 import org.threeten.bp.DayOfWeek.SUNDAY
@@ -48,6 +47,7 @@ import org.threeten.bp.zone.ZoneOffsetTransitionRule.TimeDefinition.STANDARD
 import org.threeten.bp.zone.ZoneOffsetTransitionRule.TimeDefinition.UTC
 import org.threeten.bp.zone.ZoneOffsetTransitionRule.TimeDefinition.WALL
 import org.threeten.bp._
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test ZoneRulesBuilder. */
 object TestZoneRulesBuilder {
@@ -70,7 +70,7 @@ object TestZoneRulesBuilder {
   def dateTime(year: Int, month: Month, day: Int, h: Int, m: Int): LocalDateTime = LocalDateTime.of(year, month, day, h, m)
 }
 
-class TestZoneRulesBuilder extends FunSuite with AssertionsHelper {
+class TestZoneRulesBuilder extends AnyFunSuite with AssertionsHelper {
 
   private def assertGap(test: ZoneRules, y: Int, m: Int, d: Int, hr: Int, min: Int, before: ZoneOffset, after: ZoneOffset): Unit = {
     val dt: LocalDateTime = TestZoneRulesBuilder.dateTime(y, m, d, hr, min)

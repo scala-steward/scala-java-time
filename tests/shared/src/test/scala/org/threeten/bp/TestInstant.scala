@@ -31,11 +31,12 @@
  */
 package org.threeten.bp
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.BeforeAndAfter
 import org.threeten.bp.format.DateTimeParseException
 import org.threeten.bp.temporal.ChronoField.{INSTANT_SECONDS, MICRO_OF_SECOND, MILLI_OF_SECOND, NANO_OF_SECOND}
 import org.threeten.bp.temporal.ChronoUnit.{NANOS, SECONDS, DAYS}
 import org.threeten.bp.temporal._
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test Instant. */
 object TestInstant {
@@ -43,7 +44,7 @@ object TestInstant {
   val MAX_SECOND: Long = Instant.MAX.getEpochSecond
 }
 
-class TestInstant extends FunSuite with GenDateTimeTest with AssertionsHelper with BeforeAndAfter {
+class TestInstant extends AnyFunSuite with GenDateTimeTest with AssertionsHelper with BeforeAndAfter {
   private var TEST_12345_123456789: Instant = null
 
   before {

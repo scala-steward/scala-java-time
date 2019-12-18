@@ -33,8 +33,8 @@ package org.threeten.bp.zone
 
 import java.util.Collections
 
-import org.scalatest.FunSuite
 import org.threeten.bp.{AssertionsHelper, ZoneOffset}
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test ZoneRulesProvider. */
 object TestZoneRulesProvider {
@@ -61,7 +61,7 @@ object TestZoneRulesProvider {
 
 }
 
-class TestZoneRulesProvider extends FunSuite with AssertionsHelper {
+class TestZoneRulesProvider extends AnyFunSuite with AssertionsHelper {
   test("getAvailableGroupIds") {
     val zoneIds: java.util.Set[String] = ZoneRulesProvider.getAvailableZoneIds
     assertTrue(zoneIds.contains("Europe/London"))

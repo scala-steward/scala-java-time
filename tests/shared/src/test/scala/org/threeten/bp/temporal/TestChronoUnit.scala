@@ -31,7 +31,6 @@
  */
 package org.threeten.bp.temporal
 
-import org.scalatest.FunSuite
 import org.threeten.bp.AssertionsHelper
 import org.threeten.bp.Month.AUGUST
 import org.threeten.bp.Month.FEBRUARY
@@ -48,13 +47,14 @@ import org.threeten.bp.temporal.ChronoUnit.YEARS
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
 import org.threeten.bp.ZoneOffset
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test. */
 object TestChronoUnit {
   private def date(year: Int, month: Month, dom: Int): LocalDate = LocalDate.of(year, month, dom)
 }
 
-class TestChronoUnit extends FunSuite with AssertionsHelper {
+class TestChronoUnit extends AnyFunSuite with AssertionsHelper {
   val data_yearsBetween: List[(LocalDate, LocalDate, Int)] = {
     List(
       (TestChronoUnit.date(1939, SEPTEMBER, 2), TestChronoUnit.date(1939, SEPTEMBER, 1), 0),

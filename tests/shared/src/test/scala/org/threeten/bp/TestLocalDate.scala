@@ -31,12 +31,13 @@
  */
 package org.threeten.bp
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.BeforeAndAfter
 import org.threeten.bp.chrono.IsoChronology
 import org.threeten.bp.format.{DateTimeFormatter, DateTimeParseException}
 import org.threeten.bp.temporal.ChronoField._
 import org.threeten.bp.temporal.ChronoUnit._
 import org.threeten.bp.temporal._
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test LocalDate. */
 object TestLocalDate {
@@ -45,7 +46,7 @@ object TestLocalDate {
   private val ZONE_GAZA: ZoneId = ZoneId.of("Asia/Gaza")
 }
 
-class TestLocalDate extends FunSuite with GenDateTimeTest with AssertionsHelper with BeforeAndAfter {
+class TestLocalDate extends AnyFunSuite with GenDateTimeTest with AssertionsHelper with BeforeAndAfter {
   private var TEST_2007_07_15: LocalDate = null
   private var MAX_VALID_EPOCHDAYS: Long = 0L
   private var MIN_VALID_EPOCHDAYS: Long = 0L

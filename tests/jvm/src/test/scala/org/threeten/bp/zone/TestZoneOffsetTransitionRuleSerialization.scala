@@ -31,11 +31,11 @@
  */
 package org.threeten.bp.zone
 
-import org.scalatest.FunSuite
 import org.threeten.bp._
 import org.threeten.bp.zone.ZoneOffsetTransitionRule.TimeDefinition
+import org.scalatest.funsuite.AnyFunSuite
 
-class TestZoneOffsetTransitionRuleSerialization extends FunSuite with AssertionsHelper with AbstractTest {
+class TestZoneOffsetTransitionRuleSerialization extends AnyFunSuite with AssertionsHelper with AbstractTest {
   test("getters_floatingWeek") {
     val test: ZoneOffsetTransitionRule = ZoneOffsetTransitionRule.of(Month.MARCH, 20, DayOfWeek.SUNDAY, TestZoneOffsetTransitionRule.TIME_0100, timeEndOfDay = false, TimeDefinition.WALL, TestZoneOffsetTransitionRule.OFFSET_0200, TestZoneOffsetTransitionRule.OFFSET_0200, TestZoneOffsetTransitionRule.OFFSET_0300)
     assertEquals(test.getMonth, Month.MARCH)

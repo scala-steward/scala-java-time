@@ -31,7 +31,7 @@
  */
 package org.threeten.bp.chrono
 
-import org.scalatest.{BeforeAndAfterEach, FunSuite}
+import org.scalatest.BeforeAndAfterEach
 
 import org.threeten.bp.AssertionsHelper
 import org.threeten.bp.DateTimeException
@@ -41,9 +41,10 @@ import org.threeten.bp.Month
 import org.threeten.bp.temporal.TemporalAdjusters
 import org.threeten.bp.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH
 import org.threeten.bp.temporal.ChronoField.ALIGNED_WEEK_OF_MONTH
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test. */
-class TestHijrahChronology extends FunSuite with BeforeAndAfterEach with AssertionsHelper {
+class TestHijrahChronology extends AnyFunSuite with BeforeAndAfterEach with AssertionsHelper {
   test("test_chrono_byName") {
     val c: Chronology = HijrahChronology.INSTANCE
     val test: Chronology = Chronology.of("Hijrah")

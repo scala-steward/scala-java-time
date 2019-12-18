@@ -31,7 +31,6 @@
  */
 package org.threeten.bp.chrono
 
-import org.scalatest.FunSuite
 
 import org.threeten.bp.AssertionsHelper
 import org.threeten.bp.temporal.ChronoField.ERA
@@ -43,9 +42,10 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Month
 import org.threeten.bp.temporal.ChronoField
 import org.threeten.bp.temporal.TemporalAdjusters
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test. */
-class TestIsoChronology extends FunSuite with AssertionsHelper {
+class TestIsoChronology extends AnyFunSuite with AssertionsHelper {
   test("test_chrono_byName") {
     val c: Chronology = IsoChronology.INSTANCE
     val test: Chronology = Chronology.of("ISO")

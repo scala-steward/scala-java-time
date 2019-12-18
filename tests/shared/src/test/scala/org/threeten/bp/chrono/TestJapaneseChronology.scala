@@ -31,7 +31,6 @@
  */
 package org.threeten.bp.chrono
 
-import org.scalatest.FunSuite
 
 import org.threeten.bp.AssertionsHelper
 import org.threeten.bp.DateTimeException
@@ -40,9 +39,10 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Month
 import org.threeten.bp.temporal.TemporalAdjusters
 import org.threeten.bp.chrono.internal.TTBPJapaneseEra
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test. */
-class TestJapaneseChronology extends FunSuite with AssertionsHelper {
+class TestJapaneseChronology extends AnyFunSuite with AssertionsHelper {
   test("test_chrono_byName") {
     val c: Chronology = JapaneseChronology.INSTANCE
     val test: Chronology = Chronology.of("Japanese")

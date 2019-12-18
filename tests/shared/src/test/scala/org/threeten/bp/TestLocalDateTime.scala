@@ -73,7 +73,7 @@ import java.io.ObjectOutputStream
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.BeforeAndAfter
 import org.threeten.bp.chrono.IsoChronology
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeParseException
@@ -87,6 +87,7 @@ import org.threeten.bp.temporal.TemporalAdjuster
 import org.threeten.bp.temporal.TemporalField
 import org.threeten.bp.temporal.TemporalQueries
 import org.threeten.bp.temporal.TemporalUnit
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test LocalDateTime. */
 object TestLocalDateTime {
@@ -97,7 +98,7 @@ object TestLocalDateTime {
   private val ZONE_GAZA: ZoneId = ZoneId.of("Asia/Gaza")
 }
 
-class TestLocalDateTime extends FunSuite with GenDateTimeTest with AssertionsHelper with BeforeAndAfter {
+class TestLocalDateTime extends AnyFunSuite with GenDateTimeTest with AssertionsHelper with BeforeAndAfter {
   private val TEST_2007_07_15_12_30_40_987654321: LocalDateTime = LocalDateTime.of(2007, 7, 15, 12, 30, 40, 987654321)
   private var MAX_DATE_TIME: LocalDateTime = null
   private var MIN_DATE_TIME: LocalDateTime = null

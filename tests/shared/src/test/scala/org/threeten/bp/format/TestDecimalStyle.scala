@@ -33,11 +33,11 @@ package org.threeten.bp.format
 
 import java.util.Locale
 
-import org.scalatest.FunSuite
 import org.threeten.bp.AssertionsHelper
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test DecimalStyle. */
-class TestDecimalStyle extends FunSuite with AssertionsHelper {
+class TestDecimalStyle extends AnyFunSuite with AssertionsHelper {
   test("getAvailableLocales") {
     val locales: java.util.Set[Locale] = DecimalStyle.getAvailableLocales
     assertEquals(locales.size > 0, true)
