@@ -33,10 +33,10 @@ package org.threeten.bp.zone
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
 
-import org.scalatest.FunSuite
 import org.threeten.bp._
+import org.scalatest.funsuite.AnyFunSuite
 
-class TestStandardZoneRulesSerialization  extends FunSuite with AssertionsHelper with AbstractTest {
+class TestStandardZoneRulesSerialization  extends AnyFunSuite with AssertionsHelper with AbstractTest {
   test("serialization_loaded") {
     assertSerialization(europeLondon)
     assertSerialization(europeParis)

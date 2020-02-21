@@ -66,7 +66,7 @@ import org.threeten.bp.temporal.ChronoUnit.DAYS
 import org.threeten.bp.temporal.ChronoUnit.NANOS
 import org.threeten.bp.temporal.ChronoUnit.SECONDS
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.BeforeAndAfter
 import org.threeten.bp.chrono.IsoChronology
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.temporal.ChronoField
@@ -77,6 +77,7 @@ import org.threeten.bp.temporal.TemporalAccessor
 import org.threeten.bp.temporal.TemporalAdjuster
 import org.threeten.bp.temporal.TemporalField
 import org.threeten.bp.temporal.TemporalQueries
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test OffsetDateTime. */
 object TestOffsetDateTime {
@@ -88,7 +89,7 @@ object TestOffsetDateTime {
   val OFFSET_MTWO: ZoneOffset = ZoneOffset.ofHours(-2)
 }
 
-class TestOffsetDateTime extends FunSuite with GenDateTimeTest with AssertionsHelper with BeforeAndAfter {
+class TestOffsetDateTime extends AnyFunSuite with GenDateTimeTest with AssertionsHelper with BeforeAndAfter {
   private var TEST_2008_6_30_11_30_59_000000500: OffsetDateTime = null
 
   before {

@@ -31,7 +31,6 @@
  */
 package org.threeten.bp.temporal
 
-import org.scalatest.FunSuite
 import org.threeten.bp.AssertionsHelper
 import org.threeten.bp.Platform
 import org.threeten.bp.temporal.ChronoField.ERA

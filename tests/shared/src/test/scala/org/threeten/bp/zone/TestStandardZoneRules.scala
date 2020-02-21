@@ -31,9 +31,9 @@
  */
 package org.threeten.bp.zone
 
-import org.scalatest.FunSuite
 import org.threeten.bp._
 import org.threeten.bp.zone.ZoneOffsetTransitionRule.TimeDefinition
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test ZoneRules. */
 object TestStandardZoneRules {
@@ -45,7 +45,7 @@ object TestStandardZoneRules {
   val GAP: Int = 0
 }
 
-class TestStandardZoneRules extends FunSuite with AssertionsHelper {
+class TestStandardZoneRules extends AnyFunSuite with AssertionsHelper {
 
   private def etcGmt: ZoneRules = {
     ZoneId.of("Etc/GMT").getRules

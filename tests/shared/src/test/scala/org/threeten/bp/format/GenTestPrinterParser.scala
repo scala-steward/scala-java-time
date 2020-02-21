@@ -34,7 +34,7 @@ package org.threeten.bp.format
 import java.util.Locale
 import java.lang.StringBuilder
 
-import org.scalatest.{BeforeAndAfterEach, FunSuite}
+import org.scalatest.BeforeAndAfterEach
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime

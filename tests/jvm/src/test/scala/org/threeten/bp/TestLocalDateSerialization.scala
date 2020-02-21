@@ -34,9 +34,10 @@ package org.threeten.bp
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
 import java.lang.reflect.{Field, Modifier}
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.BeforeAndAfter
+import org.scalatest.funsuite.AnyFunSuite
 
-class TestLocalDateSerialization extends FunSuite with AssertionsHelper with BeforeAndAfter {
+class TestLocalDateSerialization extends AnyFunSuite with AssertionsHelper with BeforeAndAfter {
   private val TEST_2007_07_15: LocalDate = LocalDate.of(2007, 7, 15)
 
   test("serialization") {

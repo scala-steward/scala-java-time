@@ -40,7 +40,6 @@ import org.threeten.bp.temporal.ChronoField.NANO_OF_SECOND
 import org.threeten.bp.temporal.ChronoField.OFFSET_SECONDS
 import org.threeten.bp.temporal.ChronoField.SECOND_OF_DAY
 import org.threeten.bp.temporal.ChronoField.SECOND_OF_MINUTE
-import org.scalatest.FunSuite
 import org.threeten.bp.AssertionsHelper
 import org.threeten.bp.DateTimeException
 import org.threeten.bp.Instant
@@ -49,6 +48,7 @@ import org.threeten.bp.ZoneId
 import org.threeten.bp.ZoneOffset
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.TemporalAccessor
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test parsing of edge cases. */
 object TestDateTimeParsing {
@@ -75,7 +75,7 @@ object TestDateTimeParsing {
         .appendZoneId.toFormatter;
 }
 
-class TestDateTimeParsing extends FunSuite with GenTestPrinterParser with AssertionsHelper {
+class TestDateTimeParsing extends AnyFunSuite with GenTestPrinterParser with AssertionsHelper {
   val data_instantZones: List[(DateTimeFormatter, String, ZonedDateTime)] = {
     List(
       (TestDateTimeParsing.LOCALFIELDS_ZONEID, "2014-06-30 01:02:03 Europe/Paris", ZonedDateTime.of(2014, 6, 30, 1, 2, 3, 0, TestDateTimeParsing.PARIS)),

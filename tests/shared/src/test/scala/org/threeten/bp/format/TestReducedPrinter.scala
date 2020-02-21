@@ -31,16 +31,16 @@
  */
 package org.threeten.bp.format
 
-import org.scalatest.FunSuite
 import org.threeten.bp.AssertionsHelper
 import org.threeten.bp.temporal.ChronoField.YEAR
 import org.threeten.bp.DateTimeException
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.internal.TTBPDateTimeFormatterBuilder
 import org.threeten.bp.temporal.MockFieldValue
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test ReducedPrinterParser. */
-class TestReducedPrinter extends FunSuite with GenTestPrinterParser with AssertionsHelper {
+class TestReducedPrinter extends AnyFunSuite with GenTestPrinterParser with AssertionsHelper {
   test("test_print_emptyCalendrical") {
     assertThrows[DateTimeException] {
       val pp: TTBPDateTimeFormatterBuilder.ReducedPrinterParser = new TTBPDateTimeFormatterBuilder.ReducedPrinterParser(YEAR, 2, 2, 2010, null)

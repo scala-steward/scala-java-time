@@ -2,7 +2,6 @@ package org.threeten.bp
 
 import org.scalactic.{Prettifier, source}
 import org.scalatest.Assertion
-import org.scalatest.FunSuite
 
 /**
   * Helper methods to avoid rewriting much of the TestNG tests

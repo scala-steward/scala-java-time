@@ -32,7 +32,6 @@
 package org.threeten.bp.format
 
 import org.scalatest.BeforeAndAfterEach
-import org.scalatest.FunSuite
 import org.threeten.bp.AssertionsHelper
 import org.threeten.bp.temporal.ChronoField.DAY_OF_MONTH
 import java.lang.StringBuilder
@@ -49,6 +48,7 @@ import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.TemporalAccessor
 import org.threeten.bp.temporal.TemporalQuery
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test DateTimeFormatter. */
 object TestDateTimeFormatter {
@@ -56,7 +56,7 @@ object TestDateTimeFormatter {
   private val DATE_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("'ONE'uuuu MM dd")
 }
 
-class TestDateTimeFormatter extends FunSuite with GenTestPrinterParser with AssertionsHelper with BeforeAndAfterEach {
+class TestDateTimeFormatter extends AnyFunSuite with GenTestPrinterParser with AssertionsHelper with BeforeAndAfterEach {
   private var fmt: DateTimeFormatter = null
 
   def toTemporalQuery[T](f: TemporalAccessor => T): TemporalQuery[T] =

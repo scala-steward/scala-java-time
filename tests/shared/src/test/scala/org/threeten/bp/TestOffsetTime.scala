@@ -53,7 +53,7 @@ import org.threeten.bp.temporal.ChronoUnit.SECONDS
 import java.lang.reflect.Constructor
 import java.lang.reflect.InvocationTargetException
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.BeforeAndAfter
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeParseException
 import org.threeten.bp.temporal.ChronoField
@@ -63,6 +63,7 @@ import org.threeten.bp.temporal.TemporalAccessor
 import org.threeten.bp.temporal.TemporalAdjuster
 import org.threeten.bp.temporal.TemporalField
 import org.threeten.bp.temporal.TemporalQueries
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test OffsetTime. */
 object TestOffsetTime {
@@ -71,7 +72,7 @@ object TestOffsetTime {
   val DATE: LocalDate = LocalDate.of(2008, 12, 3)
 }
 
-class TestOffsetTime extends FunSuite with GenDateTimeTest with AssertionsHelper with BeforeAndAfter {
+class TestOffsetTime extends AnyFunSuite with GenDateTimeTest with AssertionsHelper with BeforeAndAfter {
   private var TEST_11_30_59_500_PONE: OffsetTime = null
 
   before {

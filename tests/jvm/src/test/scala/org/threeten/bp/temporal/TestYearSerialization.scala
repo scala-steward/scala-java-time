@@ -31,10 +31,10 @@
  */
 package org.threeten.bp.temporal
 
-import org.scalatest.FunSuite
 import org.threeten.bp._
+import org.scalatest.funsuite.AnyFunSuite
 
-class TestYearSerialization extends FunSuite with AbstractTest {
+class TestYearSerialization extends AnyFunSuite with AbstractTest {
   test("test_serialization") {
     assertSerializable(Year.of(-1))
   }

@@ -31,7 +31,6 @@
  */
 package org.threeten.bp
 
-import org.scalatest.FunSuite
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.DataInputStream
@@ -43,9 +42,10 @@ import java.io.ObjectStreamConstants
 import java.lang.reflect.Constructor
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Base test class. */
-trait AbstractTest extends FunSuite with AssertionsHelper {
+trait AbstractTest extends AnyFunSuite with AssertionsHelper {
   private val SERIALISATION_DATA_FOLDER: String = "jvm/src/test/resources/"
 
   def assertSerializable(o: AnyRef): Unit = {

@@ -31,16 +31,16 @@
  */
 package org.threeten.bp.format
 
-import org.scalatest.FunSuite
 import org.threeten.bp.AssertionsHelper
 import org.threeten.bp.DateTimeException
 import org.threeten.bp.Platform
 import org.threeten.bp.temporal.ChronoField.MONTH_OF_YEAR
 import org.threeten.bp.format.internal.TTBPDateTimeFormatterBuilder
 import org.threeten.bp.temporal.TemporalField
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test PadPrinterParserDecorator. */
-class TestPadParserDecorator extends FunSuite with GenTestPrinterParser with AssertionsHelper {
+class TestPadParserDecorator extends AnyFunSuite with GenTestPrinterParser with AssertionsHelper {
   test("test_parse_negativePosition") {
     assertThrows[Platform.DFE] {
       val pp: TTBPDateTimeFormatterBuilder.PadPrinterParserDecorator = new TTBPDateTimeFormatterBuilder.PadPrinterParserDecorator(new TTBPDateTimeFormatterBuilder.CharLiteralPrinterParser('Z'), 3, '-')

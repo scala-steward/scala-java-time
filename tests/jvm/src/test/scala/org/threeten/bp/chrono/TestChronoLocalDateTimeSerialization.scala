@@ -31,7 +31,6 @@
  */
 package org.threeten.bp.chrono
 
-import org.scalatest.FunSuite
 
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -41,8 +40,9 @@ import org.threeten.bp.AssertionsHelper
 import org.threeten.bp.AbstractTest
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
+import org.scalatest.funsuite.AnyFunSuite
 
-class TestChronoLocalDateTimeSerialization extends FunSuite with AssertionsHelper with AbstractTest {
+class TestChronoLocalDateTimeSerialization extends AnyFunSuite with AssertionsHelper with AbstractTest {
   val data_of_calendars: List[Chronology] = {
     List(
       HijrahChronology.INSTANCE,

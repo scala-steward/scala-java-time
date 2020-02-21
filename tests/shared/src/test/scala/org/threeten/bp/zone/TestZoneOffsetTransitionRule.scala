@@ -31,9 +31,9 @@
  */
 package org.threeten.bp.zone
 
-import org.scalatest.FunSuite
 import org.threeten.bp._
 import org.threeten.bp.zone.ZoneOffsetTransitionRule.TimeDefinition
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test ZoneOffsetTransitionRule. */
 object TestZoneOffsetTransitionRule {
@@ -42,7 +42,7 @@ object TestZoneOffsetTransitionRule {
   val OFFSET_0300: ZoneOffset = ZoneOffset.ofHours(3)
 }
 
-class TestZoneOffsetTransitionRule extends FunSuite with AssertionsHelper {
+class TestZoneOffsetTransitionRule extends AnyFunSuite with AssertionsHelper {
   test("factory_nullMonth") {
     assertThrows[NullPointerException] {
       ZoneOffsetTransitionRule.of(null, 20, DayOfWeek.SUNDAY, TestZoneOffsetTransitionRule.TIME_0100, false, TimeDefinition.WALL, TestZoneOffsetTransitionRule.OFFSET_0200, TestZoneOffsetTransitionRule.OFFSET_0200, TestZoneOffsetTransitionRule.OFFSET_0300)

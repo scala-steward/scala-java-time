@@ -67,7 +67,7 @@ import org.threeten.bp.temporal.ChronoUnit.MINUTES
 import org.threeten.bp.temporal.ChronoUnit.NANOS
 import org.threeten.bp.temporal.ChronoUnit.SECONDS
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.BeforeAndAfter
 import org.threeten.bp.chrono.IsoChronology
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeParseException
@@ -82,6 +82,7 @@ import org.threeten.bp.temporal.TemporalQueries
 import org.threeten.bp.temporal.TemporalQuery
 import org.threeten.bp.temporal.ValueRange
 import org.threeten.bp.temporal.UnsupportedTemporalTypeException
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test ZonedDateTime. */
 object TestZonedDateTime {
@@ -108,7 +109,7 @@ object TestZonedDateTime {
   }
 }
 
-class TestZonedDateTime extends FunSuite with GenDateTimeTest with AssertionsHelper with BeforeAndAfter {
+class TestZonedDateTime extends AnyFunSuite with GenDateTimeTest with AssertionsHelper with BeforeAndAfter {
   private var TEST_PARIS_GAP_2008_03_30_02_30: LocalDateTime = null
   private var TEST_PARIS_OVERLAP_2008_10_26_02_30: LocalDateTime = null
   private var TEST_LOCAL_2008_06_30_11_30_59_500: LocalDateTime = null

@@ -31,7 +31,6 @@
  */
 package org.threeten.bp.chrono
 
-import org.scalatest.FunSuite
 
 import java.util.Locale
 import org.threeten.bp.AssertionsHelper
@@ -49,6 +48,7 @@ import org.threeten.bp.temporal.TemporalAmount
 import org.threeten.bp.temporal.TemporalField
 import org.threeten.bp.temporal.TemporalUnit
 import org.threeten.bp.temporal.ValueRange
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test assertions that must be true for all built-in chronologies. */
 object TestChronoLocalDateTime {
@@ -163,7 +163,7 @@ object TestChronoLocalDateTime {
 
 }
 
-class TestChronoLocalDateTime extends FunSuite with AssertionsHelper {
+class TestChronoLocalDateTime extends AnyFunSuite with AssertionsHelper {
   val data_of_calendars: List[Chronology] = {
     List(
       (HijrahChronology.INSTANCE),

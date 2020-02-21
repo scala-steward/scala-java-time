@@ -31,7 +31,6 @@
  */
 package org.threeten.bp.format
 
-import org.scalatest.FunSuite
 import org.scalatest.BeforeAndAfterEach
 import org.threeten.bp.AssertionsHelper
 import org.threeten.bp.temporal.ChronoField.DAY_OF_MONTH
@@ -46,9 +45,10 @@ import scala.language.implicitConversions
 import scala.collection.JavaConverters._
 
 import java.text.ParsePosition
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Test DateTimeFormatterBuilder. */
-class TestDateTimeFormatterBuilder extends FunSuite with AssertionsHelper with BeforeAndAfterEach {
+class TestDateTimeFormatterBuilder extends AnyFunSuite with AssertionsHelper with BeforeAndAfterEach {
   // We need these ugly converters to fit the signatures in everycase
   implicit def convLongMap(al: Map[Long, String]): java.util.Map[java.lang.Long, String] =
     al.map(k => (Long.box(k._1), k._2)).asJava
