@@ -15,7 +15,7 @@ addSbtPlugin("io.github.cquiroz" % "sbt-tzdb" % "2.0.0")
 
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.6")
 
-addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.16")
+addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.22")
 
 addSbtPlugin("com.geirsson" % "sbt-ci-release" % "1.5.7")
 
