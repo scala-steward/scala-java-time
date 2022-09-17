@@ -1,7 +1,7 @@
 addSbtPlugin("com.47deg" % "sbt-microsites" % "1.3.4")
 
 val scalaJSVersion =
-  Option(System.getenv("SCALAJS_VERSION")).getOrElse("1.10.1")
+  Option(System.getenv("SCALAJS_VERSION")).getOrElse("1.11.0")
 
 addSbtPlugin("org.portable-scala" % "sbt-crossproject" % "1.2.0")
 
