@@ -15,7 +15,7 @@ addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.6")
 
 addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.3.1")
 
-addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.5.10")
+addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.5.11")
 
 addSbtPlugin("ch.epfl.lamp" % "sbt-dotty" % "0.5.5")
 
