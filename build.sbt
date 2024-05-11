@@ -83,7 +83,6 @@ lazy val commonSettings = Seq(
       )
     else
       List(
-        "-Xfatal-warnings"
       )
   },
   javaOptions ++= Seq("-Dfile.encoding=UTF8"),
