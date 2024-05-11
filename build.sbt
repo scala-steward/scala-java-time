@@ -1,4 +1,4 @@
-val scala213 = "2.13.10"
+val scala213 = "2.13.14"
 val scala3   = "3.3.3"
 ThisBuild / scalaVersion       := scala213
 ThisBuild / crossScalaVersions := Seq("2.12.17", scala213, scala3)
@@ -11,14 +11,14 @@ ThisBuild / githubWorkflowJavaVersions := Seq(javaDistro)
 ThisBuild / githubWorkflowSbtCommand := "./sbt"
 
 ThisBuild / githubWorkflowBuildMatrixExclusions ++= Seq(
-  MatrixExclude(Map("scala" -> scala3, "project" -> "rootJVM")), // TODO
+  MatrixExclude(Map("scala" -> "3", "project" -> "rootJVM")), // TODO
   MatrixExclude(
-    Map("scala" -> scala3, "project" -> "rootNative", "os" -> "ubuntu-latest")
+    Map("scala" -> "3", "project" -> "rootNative", "os" -> "ubuntu-latest")
   ) // run on macOS instead
 )
 
 ThisBuild / githubWorkflowBuildMatrixInclusions +=
-  MatrixInclude(Map("scala" -> scala3, "java" -> javaDistro.render, "project" -> "rootNative"),
+  MatrixInclude(Map("scala" -> "3", "java" -> javaDistro.render, "project" -> "rootNative"),
                 Map("os"    -> "macos-latest")
   )
 
