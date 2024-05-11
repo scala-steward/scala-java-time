@@ -8,6 +8,8 @@ ThisBuild / tlBaseVersion := "2.5"
 val temurin = JavaSpec.temurin("8")
 ThisBuild / githubWorkflowJavaVersions := Seq(temurin)
 
+ThisBuild / githubWorkflowSbtCommand := "./sbt"
+
 ThisBuild / githubWorkflowBuildMatrixExclusions ++= Seq(
   MatrixExclude(Map("scala" -> scala3, "project" -> "rootJVM")), // TODO
   MatrixExclude(
