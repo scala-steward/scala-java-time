@@ -5,8 +5,8 @@ ThisBuild / crossScalaVersions := Seq("2.12.17", scala213, scala3)
 
 ThisBuild / tlBaseVersion := "2.5"
 
-val temurin = JavaSpec.corretto("8")
-ThisBuild / githubWorkflowJavaVersions := Seq(temurin)
+val javaDistro = JavaSpec.corretto("8")
+ThisBuild / githubWorkflowJavaVersions := Seq(javaDistro)
 
 ThisBuild / githubWorkflowSbtCommand := "./sbt"
 
@@ -18,7 +18,7 @@ ThisBuild / githubWorkflowBuildMatrixExclusions ++= Seq(
 )
 
 ThisBuild / githubWorkflowBuildMatrixInclusions +=
-  MatrixInclude(Map("scala" -> scala3, "java" -> temurin.render, "project" -> "rootNative"),
+  MatrixInclude(Map("scala" -> scala3, "java" -> javaDistro.render, "project" -> "rootNative"),
                 Map("os"    -> "macos-latest")
   )
 
