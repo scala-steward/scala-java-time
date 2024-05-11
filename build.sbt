@@ -178,7 +178,6 @@ lazy val tzdb = crossProject(JVMPlatform, JSPlatform, NativePlatform)
     name            := "scala-java-time-tzdb",
     includeTTBP     := true,
     dbVersion       := TzdbPlugin.Version(tzdbVersion),
-    tlFatalWarnings := false
   )
   .jsSettings(
     Compile / sourceGenerators += Def.task {
@@ -251,7 +250,6 @@ lazy val demo = crossProject(JSPlatform, JVMPlatform, NativePlatform)
     Keys.`package`  := file(""),
     zonesFilter     := zonesFilterFn,
     dbVersion       := TzdbPlugin.Version(tzdbVersion),
-    tlFatalWarnings := false,
     // delegate test to run, so that it is invoked during test step in ci
     Test / test     := (Compile / run).toTask("").value
   )
