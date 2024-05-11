@@ -5,7 +5,7 @@ ThisBuild / crossScalaVersions := Seq("2.12.17", scala213, scala3)
 
 ThisBuild / tlBaseVersion := "2.5"
 
-val temurin = JavaSpec.temurin("8")
+val temurin = JavaSpec.corretto("8")
 ThisBuild / githubWorkflowJavaVersions := Seq(temurin)
 
 ThisBuild / githubWorkflowSbtCommand := "./sbt"
