@@ -1,12 +1,12 @@
 val scala213 = "2.13.10"
-val scala3   = "3.2.1"
+val scala3   = "3.3.3"
 ThisBuild / scalaVersion       := scala213
 ThisBuild / crossScalaVersions := Seq("2.12.17", scala213, scala3)
 
 ThisBuild / tlBaseVersion := "2.5"
 
-val temurin11 = JavaSpec.temurin("11")
-ThisBuild / githubWorkflowJavaVersions := Seq(temurin11)
+val temurin = JavaSpec.temurin("8")
+ThisBuild / githubWorkflowJavaVersions := Seq(temurin)
 
 ThisBuild / githubWorkflowBuildMatrixExclusions ++= Seq(
   MatrixExclude(Map("scala" -> scala3, "project" -> "rootJVM")), // TODO
@@ -16,12 +16,12 @@ ThisBuild / githubWorkflowBuildMatrixExclusions ++= Seq(
 )
 
 ThisBuild / githubWorkflowBuildMatrixInclusions +=
-  MatrixInclude(Map("scala" -> scala3, "java" -> temurin11.render, "project" -> "rootNative"),
+  MatrixInclude(Map("scala" -> scala3, "java" -> temurin.render, "project" -> "rootNative"),
                 Map("os"    -> "macos-latest")
   )
 
 val tzdbVersion             = "2019c"
-val scalajavaLocalesVersion = "1.5.1"
+val scalajavaLocalesVersion = "1.6.0"
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 lazy val downloadFromZip: TaskKey[Unit] =
