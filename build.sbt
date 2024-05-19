@@ -1,22 +1,24 @@
-val scala213 = "2.13.10"
-val scala3   = "3.2.1"
+val scala213 = "2.13.14"
+val scala3   = "3.3.3"
 ThisBuild / scalaVersion       := scala213
 ThisBuild / crossScalaVersions := Seq("2.12.17", scala213, scala3)
 
 ThisBuild / tlBaseVersion := "2.5"
 
-val temurin11 = JavaSpec.temurin("11")
-ThisBuild / githubWorkflowJavaVersions := Seq(temurin11)
+val javaDistro = JavaSpec.corretto("11")
+ThisBuild / githubWorkflowJavaVersions := Seq(javaDistro)
+
+ThisBuild / githubWorkflowSbtCommand := "./sbt"
 
 ThisBuild / githubWorkflowBuildMatrixExclusions ++= Seq(
-  MatrixExclude(Map("scala" -> scala3, "project" -> "rootJVM")), // TODO
+  MatrixExclude(Map("scala" -> "3", "project" -> "rootJVM")), // TODO
   MatrixExclude(
-    Map("scala" -> scala3, "project" -> "rootNative", "os" -> "ubuntu-latest")
+    Map("scala" -> "3", "project" -> "rootNative", "os" -> "ubuntu-latest")
   ) // run on macOS instead
 )
 
 ThisBuild / githubWorkflowBuildMatrixInclusions +=
-  MatrixInclude(Map("scala" -> scala3, "java" -> temurin11.render, "project" -> "rootNative"),
+  MatrixInclude(Map("scala" -> "3", "java" -> javaDistro.render, "project" -> "rootNative"),
                 Map("os"    -> "macos-latest")
   )
 
@@ -176,7 +178,6 @@ lazy val tzdb = crossProject(JVMPlatform, JSPlatform, NativePlatform)
     name            := "scala-java-time-tzdb",
     includeTTBP     := true,
     dbVersion       := TzdbPlugin.Version(tzdbVersion),
-    tlFatalWarnings := false
   )
   .jsSettings(
     Compile / sourceGenerators += Def.task {
@@ -249,7 +250,6 @@ lazy val demo = crossProject(JSPlatform, JVMPlatform, NativePlatform)
     Keys.`package`  := file(""),
     zonesFilter     := zonesFilterFn,
     dbVersion       := TzdbPlugin.Version(tzdbVersion),
-    tlFatalWarnings := false,
     // delegate test to run, so that it is invoked during test step in ci
     Test / test     := (Compile / run).toTask("").value
   )
