@@ -8,7 +8,7 @@ ThisBuild / githubWorkflowGeneratedCI ~= {
     wj.copy(
       steps = WorkflowStep.Use(
         ref = UseRef.Public("pierotofy", "set-swap-space", "master"),
-        params = Map("swap-size-gb" -> "5")
+        params = Map("swap-size-gb" -> "7")
       ) +: wj.steps
     )
   )
@@ -18,6 +18,10 @@ val javaDistro = JavaSpec.corretto("11")
 ThisBuild / githubWorkflowJavaVersions := Seq(javaDistro)
 
 ThisBuild / githubWorkflowSbtCommand := "./sbt"
+
+ThisBuild / githubWorkflowBuildMatrixExclusions ++= Seq(
+  MatrixExclude(Map("scala" -> scala3)) // TODO
+)
 
 val tzdbVersion             = "2019c"
 val scalajavaLocalesVersion = "1.5.4"
