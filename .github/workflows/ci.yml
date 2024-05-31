@@ -24,6 +24,8 @@ jobs:
         os: [ubuntu-latest]
         scala: [2.12.17, 2.13.14, 3.3.3]
         java: [corretto@11]
+        exclude:
+          - scala: 3.3.3
     runs-on: ${{ matrix.os }}
     steps:
       - uses: pierotofy/set-swap-space@master

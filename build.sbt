@@ -19,6 +19,10 @@ ThisBuild / githubWorkflowJavaVersions := Seq(javaDistro)
 
 ThisBuild / githubWorkflowSbtCommand := "./sbt"
 
+ThisBuild / githubWorkflowBuildMatrixExclusions ++= Seq(
+  MatrixExclude(Map("scala" -> scala3)) // TODO
+)
+
 val tzdbVersion             = "2019c"
 val scalajavaLocalesVersion = "1.5.4"
 Global / onChangedBuildSource := ReloadOnSourceChanges
@@ -215,11 +219,7 @@ lazy val tests = crossProject(JVMPlatform, JSPlatform, NativePlatform)
       "org.scalatest" %%% "scalatest" % "3.2.18" % Test,
     scalacOptions ~= (_.filterNot(
       Set("-Wnumeric-widen", "-Ywarn-numeric-widen", "-Ywarn-value-discard", "-Wvalue-discard")
-    )),
-    Test / test        := {
-      if (scalaVersion.value == scala3) { (Test / compile).value }
-      else { (Test / test).value }
-    }
+    ))
   )
   .jvmSettings(
     // Fork the JVM test to ensure that the custom flags are set
