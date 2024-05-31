@@ -24,13 +24,11 @@ jobs:
         os: [ubuntu-latest]
         scala: [2.12.17, 2.13.14, 3.3.3]
         java: [corretto@11]
-        exclude:
-          - scala: 3.3.3
     runs-on: ${{ matrix.os }}
     steps:
       - uses: pierotofy/set-swap-space@master
         with:
-          swap-size-gb: 7
+          swap-size-gb: 5
 
       - name: Checkout current branch (full)
         uses: actions/checkout@v4
@@ -73,7 +71,7 @@ jobs:
     steps:
       - uses: pierotofy/set-swap-space@master
         with:
-          swap-size-gb: 7
+          swap-size-gb: 5
 
       - name: Checkout current branch (full)
         uses: actions/checkout@v4
