@@ -4,8 +4,7 @@ addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.16.0")
 
 addSbtPlugin("io.github.cquiroz" % "sbt-tzdb" % "4.2.0")
 
-addSbtPlugin("com.github.sbt" % "sbt-github-actions" % "0.23.0")
-addSbtPlugin("com.github.sbt" % "sbt-ci-release"     % "1.5.12")
+addSbtPlugin("org.typelevel" % "sbt-typelevel-ci-release" % "0.7.1")
 
 addSbtPlugin("org.portable-scala" % "sbt-scala-native-crossproject" % "1.3.2")
 
