@@ -3,24 +3,21 @@ val scala3   = "3.3.3"
 ThisBuild / scalaVersion       := scala213
 ThisBuild / crossScalaVersions := Seq("2.12.17", scala213, scala3)
 
-ThisBuild / tlBaseVersion := "2.5"
+ThisBuild / githubWorkflowGeneratedCI ~= {
+  _.map(wj =>
+    wj.copy(
+      steps = WorkflowStep.Use(
+        ref = UseRef.Public("pierotofy", "set-swap-space", "master"),
+        params = Map("swap-size-gb" -> "5")
+      ) +: wj.steps
+    )
+  )
+}
 
 val javaDistro = JavaSpec.corretto("11")
 ThisBuild / githubWorkflowJavaVersions := Seq(javaDistro)
 
 ThisBuild / githubWorkflowSbtCommand := "./sbt"
-
-ThisBuild / githubWorkflowBuildMatrixExclusions ++= Seq(
-  MatrixExclude(Map("scala" -> "3", "project" -> "rootJVM")), // TODO
-  MatrixExclude(
-    Map("scala" -> "3", "project" -> "rootNative", "os" -> "ubuntu-latest")
-  ) // run on macOS instead
-)
-
-ThisBuild / githubWorkflowBuildMatrixInclusions +=
-  MatrixInclude(Map("scala" -> "3", "java" -> javaDistro.render, "project" -> "rootNative"),
-                Map("os"    -> "macos-latest")
-  )
 
 val tzdbVersion             = "2019c"
 val scalajavaLocalesVersion = "1.5.4"
@@ -32,23 +29,27 @@ lazy val downloadFromZip: TaskKey[Unit] =
 
 inThisBuild(
   List(
-    organization            := "io.github.cquiroz",
-    licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
-    developers              := List(
+    organization := "io.github.cquiroz",
+    licenses     := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
+    developers   := List(
       Developer("cquiroz",
                 "Carlos Quiroz",
                 "carlos.m.quiroz@gmail.com",
                 url("https://github.com/cquiroz")
       )
-    ),
-    tlSonatypeUseLegacyHost := true,
-    tlMimaPreviousVersions  := Set(),
-    tlCiReleaseBranches     := Seq("master"),
-    tlCiHeaderCheck         := false
+    )
   )
 )
 
-lazy val root = tlCrossRootProject.aggregate(core, tzdb, tests, demo)
+lazy val projects = List(core, tzdb, tests, demo)
+
+lazy val root = project
+  .in(file("."))
+  .settings(commonSettings)
+  .settings(
+    publish / skip := true
+  )
+  .aggregate(projects.flatMap(p => List[ProjectReference](p.jvm, p.js, p.native)): _*)
 
 lazy val commonSettings = Seq(
   description                     := "java.time API implementation in Scala and Scala.js",
@@ -77,7 +78,7 @@ lazy val commonSettings = Seq(
     }
   },
   scalacOptions --= {
-    if (tlIsScala3.value)
+    if (scalaVersion.value == scala3)
       List(
         "-Xfatal-warnings",
         "-source:3.0-migration"
@@ -148,7 +149,7 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   )
   .jsSettings(
     scalacOptions ++= {
-      if (tlIsScala3.value) Seq("-scalajs-genStaticForwardersForNonTopLevelObjects")
+      if (scalaVersion.value == scala3) Seq("-scalajs-genStaticForwardersForNonTopLevelObjects")
       else Seq("-P:scalajs:genStaticForwardersForNonTopLevelObjects")
     },
     Compile / sourceGenerators += Def.task {
@@ -177,9 +178,9 @@ lazy val tzdb = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .in(file("tzdb"))
   .settings(commonSettings)
   .settings(
-    name            := "scala-java-time-tzdb",
-    includeTTBP     := true,
-    dbVersion       := TzdbPlugin.Version(tzdbVersion),
+    name        := "scala-java-time-tzdb",
+    includeTTBP := true,
+    dbVersion   := TzdbPlugin.Version(tzdbVersion)
   )
   .jsSettings(
     Compile / sourceGenerators += Def.task {
@@ -205,10 +206,10 @@ lazy val tzdb = crossProject(JVMPlatform, JSPlatform, NativePlatform)
 lazy val tests = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .crossType(CrossType.Full)
   .in(file("tests"))
-  .enablePlugins(NoPublishPlugin)
   .settings(commonSettings)
   .settings(
     name               := "tests",
+    publish / skip     := true,
     Keys.`package`     := file(""),
     libraryDependencies +=
       "org.scalatest" %%% "scalatest" % "3.2.18" % Test,
@@ -246,14 +247,15 @@ val zonesFilterFn = (x: String) => x == "Europe/Helsinki" || x == "America/Santi
 lazy val demo = crossProject(JSPlatform, JVMPlatform, NativePlatform)
   .in(file("demo"))
   .dependsOn(core)
-  .enablePlugins(TzdbPlugin, NoPublishPlugin)
+  .enablePlugins(TzdbPlugin)
   .settings(
-    name            := "demo",
-    Keys.`package`  := file(""),
-    zonesFilter     := zonesFilterFn,
-    dbVersion       := TzdbPlugin.Version(tzdbVersion),
+    name           := "demo",
+    publish / skip := true,
+    Keys.`package` := file(""),
+    zonesFilter    := zonesFilterFn,
+    dbVersion      := TzdbPlugin.Version(tzdbVersion),
     // delegate test to run, so that it is invoked during test step in ci
-    Test / test     := (Compile / run).toTask("").value
+    Test / test    := (Compile / run).toTask("").value
   )
   .jsSettings(
     scalaJSUseMainModuleInitializer := true
