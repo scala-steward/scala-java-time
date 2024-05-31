@@ -23,7 +23,7 @@ ThisBuild / githubWorkflowBuildMatrixInclusions +=
   )
 
 val tzdbVersion             = "2019c"
-val scalajavaLocalesVersion = "1.6.0"
+val scalajavaLocalesVersion = "1.5.4"
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 lazy val downloadFromZip: TaskKey[Unit] =
@@ -209,7 +209,7 @@ lazy val tests = crossProject(JVMPlatform, JSPlatform, NativePlatform)
     name               := "tests",
     Keys.`package`     := file(""),
     libraryDependencies +=
-      "org.scalatest" %%% "scalatest" % "3.2.14" % Test,
+      "org.scalatest" %%% "scalatest" % "3.2.18" % Test,
     scalacOptions ~= (_.filterNot(
       Set("-Wnumeric-widen", "-Ywarn-numeric-widen", "-Ywarn-value-discard", "-Wvalue-discard")
     ))
