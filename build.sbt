@@ -25,6 +25,7 @@ ThisBuild / githubWorkflowBuildMatrixInclusions +=
 val tzdbVersion             = "2019c"
 val scalajavaLocalesVersion = "1.5.4"
 Global / onChangedBuildSource := ReloadOnSourceChanges
+Global / concurrentRestrictions += Tags.limit(NativeTags.Link, 1)
 
 lazy val downloadFromZip: TaskKey[Unit] =
   taskKey[Unit]("Download the tzdb tarball and extract it")
