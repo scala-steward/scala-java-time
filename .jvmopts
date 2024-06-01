@@ -1,4 +1,4 @@
--Xmx4g
+-Xmx5g
 -Xss4m
 -XX:+UseShenandoahGC
 -Dfile.encoding=UTF8
