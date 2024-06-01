@@ -11,16 +11,8 @@ ThisBuild / githubWorkflowJavaVersions := Seq(javaDistro)
 ThisBuild / githubWorkflowSbtCommand := "./sbt"
 
 ThisBuild / githubWorkflowBuildMatrixExclusions ++= Seq(
-  MatrixExclude(Map("scala" -> "3", "project" -> "rootJVM")), // TODO
-  MatrixExclude(
-    Map("scala" -> "3", "project" -> "rootNative", "os" -> "ubuntu-latest")
-  ) // run on macOS instead
+  MatrixExclude(Map("scala" -> "3", "project" -> "rootJVM")) // TODO
 )
-
-ThisBuild / githubWorkflowBuildMatrixInclusions +=
-  MatrixInclude(Map("scala" -> "3", "java" -> javaDistro.render, "project" -> "rootNative"),
-                Map("os"    -> "macos-latest")
-  )
 
 val tzdbVersion             = "2019c"
 val scalajavaLocalesVersion = "1.5.4"
@@ -177,9 +169,9 @@ lazy val tzdb = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .in(file("tzdb"))
   .settings(commonSettings)
   .settings(
-    name            := "scala-java-time-tzdb",
-    includeTTBP     := true,
-    dbVersion       := TzdbPlugin.Version(tzdbVersion),
+    name        := "scala-java-time-tzdb",
+    includeTTBP := true,
+    dbVersion   := TzdbPlugin.Version(tzdbVersion)
   )
   .jsSettings(
     Compile / sourceGenerators += Def.task {
@@ -248,12 +240,12 @@ lazy val demo = crossProject(JSPlatform, JVMPlatform, NativePlatform)
   .dependsOn(core)
   .enablePlugins(TzdbPlugin, NoPublishPlugin)
   .settings(
-    name            := "demo",
-    Keys.`package`  := file(""),
-    zonesFilter     := zonesFilterFn,
-    dbVersion       := TzdbPlugin.Version(tzdbVersion),
+    name           := "demo",
+    Keys.`package` := file(""),
+    zonesFilter    := zonesFilterFn,
+    dbVersion      := TzdbPlugin.Version(tzdbVersion),
     // delegate test to run, so that it is invoked during test step in ci
-    Test / test     := (Compile / run).toTask("").value
+    Test / test    := (Compile / run).toTask("").value
   )
   .jsSettings(
     scalaJSUseMainModuleInitializer := true
