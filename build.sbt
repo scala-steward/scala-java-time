@@ -13,8 +13,16 @@ ThisBuild / githubWorkflowJavaVersions := Seq(javaDistro)
 ThisBuild / githubWorkflowSbtCommand := "./sbt"
 
 ThisBuild / githubWorkflowBuildMatrixExclusions ++= Seq(
-  MatrixExclude(Map("scala" -> "3", "project" -> "rootJVM")) // TODO
+  MatrixExclude(Map("scala" -> "3", "project" -> "rootJVM")), // TODO
+  MatrixExclude(
+    Map("scala" -> "3", "project" -> "rootNative", "os" -> "ubuntu-latest")
+  ) // run on macOS instead
 )
+
+ThisBuild / githubWorkflowBuildMatrixInclusions +=
+  MatrixInclude(Map("scala" -> "3", "java" -> javaDistro.render, "project" -> "rootNative"),
+                Map("os"    -> "macos-latest")
+  )
 
 val tzdbVersion             = "2019c"
 val scalajavaLocalesVersion = "1.5.4"
