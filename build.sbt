@@ -5,7 +5,9 @@ ThisBuild / crossScalaVersions := Seq("2.12.17", scala213, scala3)
 
 ThisBuild / tlBaseVersion := "2.5"
 
-val javaDistro = JavaSpec.corretto("11")
+ThisBuild / githubWorkflowBuildMatrixFailFast := Some(false)
+
+val javaDistro = JavaSpec.temurin("11")
 ThisBuild / githubWorkflowJavaVersions := Seq(javaDistro)
 
 ThisBuild / githubWorkflowSbtCommand := "./sbt"
