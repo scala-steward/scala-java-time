@@ -142,7 +142,7 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .settings(commonSettings)
   .settings(
     name := "scala-java-time",
-    libraryDependencies += ("org.portable-scala" %%% "portable-scala-reflect" % "1.1.2")
+    libraryDependencies += ("org.portable-scala" %%% "portable-scala-reflect" % "1.1.3")
       .cross(CrossVersion.for3Use2_13)
   )
   .jsSettings(
@@ -175,9 +175,9 @@ lazy val tzdb = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .in(file("tzdb"))
   .settings(commonSettings)
   .settings(
-    name            := "scala-java-time-tzdb",
-    includeTTBP     := true,
-    dbVersion       := TzdbPlugin.Version(tzdbVersion),
+    name        := "scala-java-time-tzdb",
+    includeTTBP := true,
+    dbVersion   := TzdbPlugin.Version(tzdbVersion)
   )
   .jsSettings(
     Compile / sourceGenerators += Def.task {
@@ -246,12 +246,12 @@ lazy val demo = crossProject(JSPlatform, JVMPlatform, NativePlatform)
   .dependsOn(core)
   .enablePlugins(TzdbPlugin, NoPublishPlugin)
   .settings(
-    name            := "demo",
-    Keys.`package`  := file(""),
-    zonesFilter     := zonesFilterFn,
-    dbVersion       := TzdbPlugin.Version(tzdbVersion),
+    name           := "demo",
+    Keys.`package` := file(""),
+    zonesFilter    := zonesFilterFn,
+    dbVersion      := TzdbPlugin.Version(tzdbVersion),
     // delegate test to run, so that it is invoked during test step in ci
-    Test / test     := (Compile / run).toTask("").value
+    Test / test    := (Compile / run).toTask("").value
   )
   .jsSettings(
     scalaJSUseMainModuleInitializer := true
