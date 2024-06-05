@@ -7,7 +7,7 @@ ThisBuild / tlBaseVersion := "2.5"
 
 ThisBuild / githubWorkflowBuildMatrixFailFast := Some(false)
 
-val javaDistro = JavaSpec.temurin("11")
+val javaDistro = JavaSpec.corretto("11")
 ThisBuild / githubWorkflowJavaVersions := Seq(javaDistro)
 
 ThisBuild / githubWorkflowSbtCommand := "./sbt"
@@ -27,10 +27,6 @@ ThisBuild / githubWorkflowBuildMatrixInclusions +=
 val tzdbVersion             = "2019c"
 val scalajavaLocalesVersion = "1.5.4"
 Global / onChangedBuildSource := ReloadOnSourceChanges
-Global / concurrentRestrictions ++= List(
-  Tags.limit(NativeTags.Link, 1),
-  Tags.limit(Tags.Test, 1)
-)
 
 lazy val downloadFromZip: TaskKey[Unit] =
   taskKey[Unit]("Download the tzdb tarball and extract it")

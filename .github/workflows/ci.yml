@@ -30,11 +30,11 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         scala: [2.12, 2.13, 3]
-        java: [temurin@11]
+        java: [corretto@11]
         project: [rootJS, rootJVM, rootNative]
         include:
           - scala: 3
-            java: temurin@11
+            java: corretto@11
             project: rootNative
             os: macos-latest
         exclude:
@@ -51,17 +51,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Java (temurin@11)
-        id: setup-java-temurin-11
-        if: matrix.java == 'temurin@11'
+      - name: Setup Java (corretto@11)
+        id: setup-java-corretto-11
+        if: matrix.java == 'corretto@11'
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
+          distribution: corretto
           java-version: 11
           cache: sbt
 
       - name: sbt update
-        if: matrix.java == 'temurin@11' && steps.setup-java-temurin-11.outputs.cache-hit == 'false'
+        if: matrix.java == 'corretto@11' && steps.setup-java-corretto-11.outputs.cache-hit == 'false'
         run: ./sbt +update
 
       - name: Check that workflows are up to date
@@ -79,11 +79,11 @@ jobs:
         run: ./sbt 'project ${{ matrix.project }}' '++ ${{ matrix.scala }}' test
 
       - name: Check binary compatibility
-        if: matrix.java == 'temurin@11' && matrix.os == 'ubuntu-latest'
+        if: matrix.java == 'corretto@11' && matrix.os == 'ubuntu-latest'
         run: ./sbt 'project ${{ matrix.project }}' '++ ${{ matrix.scala }}' mimaReportBinaryIssues
 
       - name: Generate API documentation
-        if: matrix.java == 'temurin@11' && matrix.os == 'ubuntu-latest'
+        if: matrix.java == 'corretto@11' && matrix.os == 'ubuntu-latest'
         run: ./sbt 'project ${{ matrix.project }}' '++ ${{ matrix.scala }}' doc
 
       - name: Make target directories
@@ -108,7 +108,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        java: [temurin@11]
+        java: [corretto@11]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout current branch (full)
@@ -116,17 +116,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Java (temurin@11)
-        id: setup-java-temurin-11
-        if: matrix.java == 'temurin@11'
+      - name: Setup Java (corretto@11)
+        id: setup-java-corretto-11
+        if: matrix.java == 'corretto@11'
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
+          distribution: corretto
           java-version: 11
           cache: sbt
 
       - name: sbt update
-        if: matrix.java == 'temurin@11' && steps.setup-java-temurin-11.outputs.cache-hit == 'false'
+        if: matrix.java == 'corretto@11' && steps.setup-java-corretto-11.outputs.cache-hit == 'false'
         run: ./sbt +update
 
       - name: Download target directories (2.12, rootJS)
@@ -229,7 +229,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        java: [temurin@11]
+        java: [corretto@11]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout current branch (full)
@@ -237,17 +237,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Java (temurin@11)
-        id: setup-java-temurin-11
-        if: matrix.java == 'temurin@11'
+      - name: Setup Java (corretto@11)
+        id: setup-java-corretto-11
+        if: matrix.java == 'corretto@11'
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
+          distribution: corretto
           java-version: 11
           cache: sbt
 
       - name: sbt update
-        if: matrix.java == 'temurin@11' && steps.setup-java-temurin-11.outputs.cache-hit == 'false'
+        if: matrix.java == 'corretto@11' && steps.setup-java-corretto-11.outputs.cache-hit == 'false'
         run: ./sbt +update
 
       - name: Submit Dependencies
