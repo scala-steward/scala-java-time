@@ -26,6 +26,7 @@ jobs:
   build:
     name: Build and Test
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest]
         scala: [2.12, 2.13, 3]
@@ -252,5 +253,5 @@ jobs:
       - name: Submit Dependencies
         uses: scalacenter/sbt-dependency-submission@v2
         with:
-          modules-ignore: rootjs_2.12 rootjs_2.13 rootjs_3 tests_sjs1_2.12 tests_sjs1_2.13 tests_sjs1_3 rootjvm_2.12 rootjvm_2.13 rootjvm_3 rootnative_2.12 rootnative_2.13 rootnative_3 demo_2.12 demo_2.13 demo_3 tests_2.12 tests_2.13 tests_3 demo_native0.4_2.12 demo_native0.4_2.13 demo_native0.4_3 tests_native0.4_2.12 tests_native0.4_2.13 tests_native0.4_3 demo_sjs1_2.12 demo_sjs1_2.13 demo_sjs1_3
+          modules-ignore: rootjs_2.12 rootjs_2.13 rootjs_3 tests_sjs1_2.12 tests_sjs1_2.13 tests_sjs1_3 rootjvm_2.12 rootjvm_2.13 rootjvm_3 rootnative_2.12 rootnative_2.13 rootnative_3 demo_2.12 demo_2.13 demo_3 tests_2.12 tests_2.13 tests_3 demo_native0.5_2.12 demo_native0.5_2.13 demo_native0.5_3 tests_native0.5_2.12 tests_native0.5_2.13 tests_native0.5_3 demo_sjs1_2.12 demo_sjs1_2.13 demo_sjs1_3
           configs-ignore: test scala-tool scala-doc-tool test-internal
