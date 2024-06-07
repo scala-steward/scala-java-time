@@ -1,27 +1,31 @@
-val scala213 = "2.13.10"
-val scala3   = "3.2.1"
+val scala213 = "2.13.14"
+val scala3   = "3.3.3"
 ThisBuild / scalaVersion       := scala213
 ThisBuild / crossScalaVersions := Seq("2.12.17", scala213, scala3)
 
 ThisBuild / tlBaseVersion := "2.5"
 
-val temurin11 = JavaSpec.temurin("11")
-ThisBuild / githubWorkflowJavaVersions := Seq(temurin11)
+ThisBuild / githubWorkflowBuildMatrixFailFast := Some(false)
+
+val javaDistro = JavaSpec.corretto("11")
+ThisBuild / githubWorkflowJavaVersions := Seq(javaDistro)
+
+ThisBuild / githubWorkflowSbtCommand := "./sbt"
 
 ThisBuild / githubWorkflowBuildMatrixExclusions ++= Seq(
-  MatrixExclude(Map("scala" -> scala3, "project" -> "rootJVM")), // TODO
+  MatrixExclude(Map("scala" -> "3", "project" -> "rootJVM")), // TODO
   MatrixExclude(
-    Map("scala" -> scala3, "project" -> "rootNative", "os" -> "ubuntu-latest")
+    Map("scala" -> "3", "project" -> "rootNative", "os" -> "ubuntu-latest")
   ) // run on macOS instead
 )
 
 ThisBuild / githubWorkflowBuildMatrixInclusions +=
-  MatrixInclude(Map("scala" -> scala3, "java" -> temurin11.render, "project" -> "rootNative"),
+  MatrixInclude(Map("scala" -> "3", "java" -> javaDistro.render, "project" -> "rootNative"),
                 Map("os"    -> "macos-latest")
   )
 
 val tzdbVersion             = "2019c"
-val scalajavaLocalesVersion = "1.5.1"
+val scalajavaLocalesVersion = "1.5.4"
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 lazy val downloadFromZip: TaskKey[Unit] =
@@ -140,7 +144,7 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .settings(commonSettings)
   .settings(
     name                                          := "scala-java-time",
-    libraryDependencies += ("org.portable-scala" %%% "portable-scala-reflect" % "1.1.2")
+    libraryDependencies += ("org.portable-scala" %%% "portable-scala-reflect" % "1.1.3")
       .cross(CrossVersion.for3Use2_13)
   )
   .jsSettings(
@@ -158,6 +162,7 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
     )
   )
   .nativeSettings(
+    scalacOptions += "-P:scalanative:genStaticForwardersForNonTopLevelObjects",
     Compile / sourceGenerators += Def.task {
       val srcDirs        = (Compile / sourceDirectories).value
       val destinationDir = (Compile / sourceManaged).value
@@ -173,10 +178,9 @@ lazy val tzdb = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .in(file("tzdb"))
   .settings(commonSettings)
   .settings(
-    name            := "scala-java-time-tzdb",
-    includeTTBP     := true,
-    dbVersion       := TzdbPlugin.Version(tzdbVersion),
-    tlFatalWarnings := false
+    name        := "scala-java-time-tzdb",
+    includeTTBP := true,
+    dbVersion   := TzdbPlugin.Version(tzdbVersion)
   )
   .jsSettings(
     Compile / sourceGenerators += Def.task {
@@ -208,7 +212,7 @@ lazy val tests = crossProject(JVMPlatform, JSPlatform, NativePlatform)
     name               := "tests",
     Keys.`package`     := file(""),
     libraryDependencies +=
-      "org.scalatest" %%% "scalatest" % "3.2.14" % Test,
+      "org.scalatest" %%% "scalatest" % "3.2.18" % Test,
     scalacOptions ~= (_.filterNot(
       Set("-Wnumeric-widen", "-Ywarn-numeric-widen", "-Ywarn-value-discard", "-Wvalue-discard")
     ))
@@ -245,13 +249,12 @@ lazy val demo = crossProject(JSPlatform, JVMPlatform, NativePlatform)
   .dependsOn(core)
   .enablePlugins(TzdbPlugin, NoPublishPlugin)
   .settings(
-    name            := "demo",
-    Keys.`package`  := file(""),
-    zonesFilter     := zonesFilterFn,
-    dbVersion       := TzdbPlugin.Version(tzdbVersion),
-    tlFatalWarnings := false,
+    name           := "demo",
+    Keys.`package` := file(""),
+    zonesFilter    := zonesFilterFn,
+    dbVersion      := TzdbPlugin.Version(tzdbVersion),
     // delegate test to run, so that it is invoked during test step in ci
-    Test / test     := (Compile / run).toTask("").value
+    Test / test    := (Compile / run).toTask("").value
   )
   .jsSettings(
     scalaJSUseMainModuleInitializer := true

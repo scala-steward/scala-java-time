@@ -4,7 +4,7 @@ import java.util.NavigableMap
 import org.threeten.bp.zone.ZoneMap
 
 object Platform {
-  type NPE = scala.scalajs.js.JavaScriptException
+  type NPE = Throwable
   type DFE = Throwable
   type CCE = Throwable
 
