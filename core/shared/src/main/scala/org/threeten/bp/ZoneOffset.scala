@@ -103,7 +103,9 @@ object ZoneOffset {
     var _offsetId = offsetId
     Objects.requireNonNull(_offsetId, "offsetId")
 
-    // "Z" is always in the cache
+    if (_offsetId == "Z")
+      return ZoneOffset.UTC
+
     val offset: ZoneOffset = ID_CACHE.get(_offsetId)
     if (offset != null)
       return offset
