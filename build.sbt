@@ -94,7 +94,11 @@ lazy val commonSettings = Seq(
 /**
  * Copy source files and translate them to the java.time package
  */
-def copyAndReplace(srcDirs: Seq[File], destinationDir: File): Seq[File] = {
+def copyAndReplace(
+  srcDirs:          Seq[File],
+  destinationDir:   File,
+  createNestedDirs: Boolean = false
+): Seq[File] = {
   // Copy a directory and return the list of files
   def copyDirectory(
     source:               File,
@@ -112,7 +116,12 @@ def copyAndReplace(srcDirs: Seq[File], destinationDir: File): Seq[File] = {
   // Copy the source files from the base project, exclude classes on java.util and dirs
   val generatedFiles: List[java.io.File] = onlyScalaDirs
     .foldLeft(Set.empty[File]) { (files, sourceDir) =>
-      files ++ copyDirectory(sourceDir, destinationDir, overwrite = true)
+      val targetDestinationDir = if (createNestedDirs) {
+        destinationDir / sourceDir.getName
+      } else {
+        destinationDir
+      }
+      files ++ copyDirectory(sourceDir, targetDestinationDir, overwrite = true)
     }
     .filterNot(_.isDirectory)
     .filter(_.getName.endsWith(".scala"))
@@ -121,6 +130,13 @@ def copyAndReplace(srcDirs: Seq[File], destinationDir: File): Seq[File] = {
 
   // These replacements will in practice rename all the classes from
   // org.threeten to java.time
+  //
+  // !!! WARNING: AVOID MODIFYING FILE CONTENTS HERE MORE THAN ABSOLUTELY NECESSARY !!!
+  //  - The more significant the change, in terms of changing source code position
+  //    (line number + column), the more broken the Scala.js source maps will be,
+  //    preventing debugging of Scala.js code that uses scala-java-code in the browser.
+  //  - Line-for-line replacements of `package/import x` with `package/import y` are
+  //    mostly ok because they don't affect the remaining code in the file.
   def replacements(line: String): String =
     line
       .replaceAll("package org.threeten$", "package java")
@@ -141,6 +157,7 @@ def copyAndReplace(srcDirs: Seq[File], destinationDir: File): Seq[File] = {
 lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .crossType(CrossType.Full)
   .in(file("core"))
+  .disablePlugins(TypelevelScalaJSGitHubPlugin)
   .settings(commonSettings)
   .settings(
     name := "scala-java-time",
@@ -152,10 +169,11 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
       if (tlIsScala3.value) Seq("-scalajs-genStaticForwardersForNonTopLevelObjects")
       else Seq("-P:scalajs:genStaticForwardersForNonTopLevelObjects")
     },
+    scalaJsGithubSourceMaps("core/shared"),
     Compile / sourceGenerators += Def.task {
       val srcDirs        = (Compile / sourceDirectories).value
       val destinationDir = (Compile / sourceManaged).value
-      copyAndReplace(srcDirs, destinationDir)
+      copyAndReplace(srcDirs, destinationDir, createNestedDirs = true)
     }.taskValue,
     libraryDependencies ++= Seq(
       "io.github.cquiroz" %%% "scala-java-locales" % scalajavaLocalesVersion
@@ -265,3 +283,40 @@ lazy val demo = crossProject(JSPlatform, JVMPlatform, NativePlatform)
   .nativeSettings(
     tzdbPlatform := TzdbPlugin.Platform.Native
   )
+
+def scalaJsGithubSourceMaps(projectDir: String) =
+  // - Unfortunately we can only specify one `projectDir`.
+  //   So, if our JS project has sources in both `core/js` and `core/shared`,
+  //   we can only pick one of those, and all sources in the other one will have
+  //   broken URLs in source maps.
+  // - The root of the problem is that in `copyAndReplace` we copy the contents of
+  //   multiple source directories into a single src_managed directory, and so we
+  //   lose information about where our sources originally came from, and even if we
+  //   could capture or recover this information, the syntax of `mapSourceURI` option
+  //   doesn't allow more than one mapping, so we probably wouldn't be able to use it
+  //   to create multiple mappings.
+  // - Also, for the same reason, we are unable to map sources that are not copied
+  //   to src_managed (stuff under java.util). Those will have invalid file: URLs.
+  // - In the future, maybe we can somehow adjust the folder structure inside `src_managed`
+  //   to introduce new top level directories matching project names (`core`).
+  // - The CI env var is set by Github actions automatically.
+  //   We only want this transformation to run when creating & publishing an artifact to Maven,
+  //   as this lets us use the original local file paths for local dev / publishLocal.
+  // ---
+  // - How to test changes to this code locally:
+  //   - Make sure the sys.env.get("CI") filter passes, one way or another
+  //   - publishLocal the core project (press enter to skip passphrase, don't need signing)
+  //   - find the resulting jar – see file path in sbt output. Open it (it's a zip archive).
+  //   - find .sjsir files inside the jar, open some of them with plain text editor
+  //   - in the first bytes of the binary, observe the raw.githubusercontent.com URL in plaintext
+  //   - copy-paste that URL into the browser.
+  //     - It should show the contents of this file on github (subject to caveats above)
+  //     - If it doesn't, make sure the version / commit hash you have locally exists on github (or fake it).
+  scalacOptions ++= sys.env.get("CI").map { _ =>
+    val localCopiedSourcesPath = (Compile / sourceManaged).value.toURI
+    val remoteSourcesPath      =
+      s"https://raw.githubusercontent.com/cquiroz/scala-java-time/${git.gitHeadCommit.value.get}/${projectDir}/src/main/"
+    val sourcesOptionName      =
+      if (tlIsScala3.value) "-scalajs-mapSourceURI" else "-P:scalajs:mapSourceURI"
+    s"${sourcesOptionName}:$localCopiedSourcesPath->$remoteSourcesPath"
+  }

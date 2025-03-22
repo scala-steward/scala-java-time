@@ -41,3 +41,5 @@ tzdb/js/src/main/resources/
 project/metals.sbt
 .direnv/
 .bsp/
+
+.DS_Store
