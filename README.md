@@ -15,7 +15,12 @@ Scala 2.11, Scala 2.12, Scala 2.13 and Scala 3.0.0 are supported.
 
 To get started with SBT, add one (or both) of these dependencies:
 
-- `libraryDependencies += "io.github.cquiroz" %%% "scala-java-time" % "2.5.0"`
+- `libraryDependencies += "io.github.cquiroz" %%% "scala-java-time" % "2.6.0"`
+- `libraryDependencies += "io.github.cquiroz" %%% "scala-java-time-tzdb" % "2.6.0"` (optional)
+
+The second dependency contains all time zones available from IANA Time Zone Database. It can be removed if your code doesn't use timezones.
+Note that the timezone db is fairly large and due to the characteristics of the API it’s not very ammenable to optimization.
+This database is published every now and then so it may be old. For current version and more possibilities, pleae see the [Time Zone section in the documentation](https://cquiroz.github.io/scala-java-time/#:~:text=Time%20zones).
 
 
 #### Documentation
