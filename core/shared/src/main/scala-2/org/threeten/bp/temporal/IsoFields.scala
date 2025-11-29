@@ -223,7 +223,7 @@ object IsoFields {
         fieldValues:     java.util.Map[TemporalField, java.lang.Long],
         partialTemporal: TemporalAccessor,
         resolverStyle:   ResolverStyle
-      ): TemporalAccessor = {
+      ): TemporalAccessor                                           = {
         val yearLong: java.lang.Long = fieldValues.get(YEAR)
         val qoyLong: java.lang.Long  = fieldValues.get(QUARTER_OF_YEAR)
         if (yearLong == null || qoyLong == null)
@@ -259,13 +259,13 @@ object IsoFields {
     private def QY                 = "QuarterOfYear"
 
     lazy val QUARTER_OF_YEAR: Field = new Field("QUARTER_OF_YEAR", 1) {
-      override def toString: String                          = QY
-      def getBaseUnit: TemporalUnit                          = QUARTER_YEARS
-      def getRangeUnit: TemporalUnit                         = YEARS
-      def range: ValueRange                                  = ValueRange.of(1, 4)
-      def isSupportedBy(temporal: TemporalAccessor): Boolean =
+      override def toString: String                                 = QY
+      def getBaseUnit: TemporalUnit                                 = QUARTER_YEARS
+      def getRangeUnit: TemporalUnit                                = YEARS
+      def range: ValueRange                                         = ValueRange.of(1, 4)
+      def isSupportedBy(temporal: TemporalAccessor): Boolean        =
         temporal.isSupported(MONTH_OF_YEAR) && isIso(temporal)
-      def rangeRefinedBy(temporal: TemporalAccessor): ValueRange = range
+      def rangeRefinedBy(temporal: TemporalAccessor): ValueRange    = range
       def getFrom(temporal: TemporalAccessor): Long                 = {
         if (!temporal.isSupported(this))
           throw unsupportedEx(QY)
@@ -310,7 +310,7 @@ object IsoFields {
         fieldValues:     java.util.Map[TemporalField, java.lang.Long],
         partialTemporal: TemporalAccessor,
         resolverStyle:   ResolverStyle
-      ): TemporalAccessor = {
+      ): TemporalAccessor                                           = {
         val wbyLong: java.lang.Long = fieldValues.get(WEEK_BASED_YEAR)
         val dowLong: Long           = fieldValues.get(DAY_OF_WEEK)
         if (wbyLong == null || !fieldValues.containsKey(DAY_OF_WEEK))
@@ -349,13 +349,13 @@ object IsoFields {
       new UnsupportedTemporalTypeException(s"Unsupported field: $f")
 
     lazy val WEEK_BASED_YEAR: Field = new Field("WEEK_BASED_YEAR", 3) {
-      override def toString: String                          = WBY
-      def getBaseUnit: TemporalUnit                          = WEEK_BASED_YEARS
-      def getRangeUnit: TemporalUnit                         = FOREVER
-      def range: ValueRange                                  = YEAR.range
-      def isSupportedBy(temporal: TemporalAccessor): Boolean =
+      override def toString: String                                 = WBY
+      def getBaseUnit: TemporalUnit                                 = WEEK_BASED_YEARS
+      def getRangeUnit: TemporalUnit                                = FOREVER
+      def range: ValueRange                                         = YEAR.range
+      def isSupportedBy(temporal: TemporalAccessor): Boolean        =
         temporal.isSupported(EPOCH_DAY) && isIso(temporal)
-      def rangeRefinedBy(temporal: TemporalAccessor): ValueRange = YEAR.range
+      def rangeRefinedBy(temporal: TemporalAccessor): ValueRange    = YEAR.range
       def getFrom(temporal: TemporalAccessor): Long                 =
         if (!temporal.isSupported(this))
           throw unsupportedEx(WBY)
