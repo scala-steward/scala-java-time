@@ -1,6 +1,7 @@
 package org.threeten.bp.zone
 
 import org.threeten.bp.ZoneOffset
+import java.util.TreeMap
 
 /**
  * Minimal provider for UTC
@@ -25,7 +26,7 @@ final class DefaultTzdbZoneRulesProvider extends ZoneRulesProvider {
   override protected def provideVersions(
     zoneId: String
   ): java.util.NavigableMap[String, ZoneRules] = {
-    val r = new ZoneMap[String, ZoneRules]
+    val r = new TreeMap[String, ZoneRules]
     // FIXME the version should be provided by the db
     r.put("2017c", provideRules("UTC", true))
     r
