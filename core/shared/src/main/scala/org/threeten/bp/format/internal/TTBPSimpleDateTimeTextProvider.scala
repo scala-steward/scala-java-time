@@ -264,14 +264,10 @@ final class TTBPSimpleDateTimeTextProvider extends TTBPDateTimeTextProvider {
       val oldSymbols: DateFormatSymbols                    = DateFormatSymbols.getInstance(locale)
       // Weekdays start from Sunday in DateFormatSymbols, but we want to start from Monday
       def adaptWeekdays(arr: Array[String]): Array[String] = {
-        val result = new Array[String](7)
-        var i      = 0
-        while (i < 6) {
-          result(i) = arr(i + 2)
-          i += 1
-        }
-        result(6) = arr(1)
-        result
+        val sunday = arr(1)
+        Array.copy(arr, 2, arr, 0, 6)
+        arr(6) = sunday
+        arr
       }
       val weekdaysArray                                    = adaptWeekdays(oldSymbols.getWeekdays)
       val itemF                                            =
