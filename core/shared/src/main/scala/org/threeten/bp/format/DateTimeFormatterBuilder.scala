@@ -105,35 +105,42 @@ object DateTimeFormatterBuilder {
   }
 
   /** Map of letters to fields. */
-  private lazy val FIELD_MAP: java.util.Map[Character, TemporalField] = {
-    // Size checked
-    val map = new java.util.HashMap[Character, TemporalField]
-    map.put('G', ChronoField.ERA)
-    map.put('y', ChronoField.YEAR_OF_ERA)
-    map.put('u', ChronoField.YEAR)
-    map.put('Q', IsoFields.QUARTER_OF_YEAR)
-    map.put('q', IsoFields.QUARTER_OF_YEAR)
-    map.put('M', ChronoField.MONTH_OF_YEAR)
-    map.put('L', ChronoField.MONTH_OF_YEAR)
-    map.put('D', ChronoField.DAY_OF_YEAR)
-    map.put('d', ChronoField.DAY_OF_MONTH)
-    map.put('F', ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH)
-    map.put('E', ChronoField.DAY_OF_WEEK)
-    map.put('c', ChronoField.DAY_OF_WEEK)
-    map.put('e', ChronoField.DAY_OF_WEEK)
-    map.put('a', ChronoField.AMPM_OF_DAY)
-    map.put('H', ChronoField.HOUR_OF_DAY)
-    map.put('k', ChronoField.CLOCK_HOUR_OF_DAY)
-    map.put('K', ChronoField.HOUR_OF_AMPM)
-    map.put('h', ChronoField.CLOCK_HOUR_OF_AMPM)
-    map.put('m', ChronoField.MINUTE_OF_HOUR)
-    map.put('s', ChronoField.SECOND_OF_MINUTE)
-    map.put('S', ChronoField.NANO_OF_SECOND)
-    map.put('A', ChronoField.MILLI_OF_DAY)
-    map.put('n', ChronoField.NANO_OF_SECOND)
-    map.put('N', ChronoField.NANO_OF_DAY)
-    map
+  private class FieldMap {
+    private val array =
+      new Array[TemporalField]('z' - 'A' + 1)
+    put('G', ChronoField.ERA)
+    put('y', ChronoField.YEAR_OF_ERA)
+    put('u', ChronoField.YEAR)
+    put('Q', IsoFields.QUARTER_OF_YEAR)
+    put('q', IsoFields.QUARTER_OF_YEAR)
+    put('M', ChronoField.MONTH_OF_YEAR)
+    put('L', ChronoField.MONTH_OF_YEAR)
+    put('D', ChronoField.DAY_OF_YEAR)
+    put('d', ChronoField.DAY_OF_MONTH)
+    put('F', ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH)
+    put('E', ChronoField.DAY_OF_WEEK)
+    put('c', ChronoField.DAY_OF_WEEK)
+    put('e', ChronoField.DAY_OF_WEEK)
+    put('a', ChronoField.AMPM_OF_DAY)
+    put('H', ChronoField.HOUR_OF_DAY)
+    put('k', ChronoField.CLOCK_HOUR_OF_DAY)
+    put('K', ChronoField.HOUR_OF_AMPM)
+    put('h', ChronoField.CLOCK_HOUR_OF_AMPM)
+    put('m', ChronoField.MINUTE_OF_HOUR)
+    put('s', ChronoField.SECOND_OF_MINUTE)
+    put('S', ChronoField.NANO_OF_SECOND)
+    put('A', ChronoField.MILLI_OF_DAY)
+    put('n', ChronoField.NANO_OF_SECOND)
+    put('N', ChronoField.NANO_OF_DAY)
+
+    private def put(char: Char, field: TemporalField): Unit =
+      array(char - 'A') = field
+
+    def get(char: Char): TemporalField =
+      if (char < 'A' || char > 'z') null
+      else array(char - 'A')
   }
+  private lazy val FIELD_MAP = new FieldMap
 
   /** Length comparator. */
   private[format] lazy val LENGTH_SORT: Comparator[String] =
@@ -742,14 +749,11 @@ final class DateTimeFormatterBuilder private (
   ): DateTimeFormatterBuilder = {
     Objects.requireNonNull(field, "field")
     Objects.requireNonNull(textLookup, "textLookup")
-    import scala.collection.JavaConverters._
-    val copy: Map[scala.Long, String]                     = textLookup.asScala.toMap.map { case (x, i) =>
-      (x.toLong, i)
-    }
-    val map: Map[TextStyle, Map[scala.Long, String]]      = Map(TextStyle.FULL -> copy)
-    val store: TTBPSimpleDateTimeTextProvider.LocaleStore =
+    val map: Map[TextStyle, TTBPSimpleDateTimeTextProvider.LocaleStore.Item] =
+      Map(TextStyle.FULL -> new TTBPSimpleDateTimeTextProvider.LocaleStore.MapItem(textLookup))
+    val store: TTBPSimpleDateTimeTextProvider.LocaleStore                    =
       new TTBPSimpleDateTimeTextProvider.LocaleStore(map)
-    val provider: TTBPDateTimeTextProvider                = new TTBPDateTimeTextProvider() {
+    val provider: TTBPDateTimeTextProvider                                   = new TTBPDateTimeTextProvider() {
       override def getText(
         field:  TemporalField,
         value:  scala.Long,
