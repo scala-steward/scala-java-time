@@ -95,7 +95,7 @@ class TestLocalDate
     )
 
   protected def invalidFields: List[TemporalField] =
-    List(ChronoField.values: _*).filterNot(validFields.contains)
+    ChronoField.values.toList.filterNot(validFields.contains)
 
   private def check(test_2008_02_29: LocalDate, y: Int, m: Int, d: Int): Unit = {
     assertEquals(test_2008_02_29.getYear, y)

@@ -44,12 +44,17 @@ object TTBPDateTimeFormatterBuilder {
       val length: Int = buf.length
       if (optional)
         context.startOptional()
-      try
-        for (pp <- printerParsers)
+      try {
+        var i: Int = 0
+        while (i < printerParsers.length) {
+          val pp = printerParsers(i)
           if (!pp.print(context, buf)) {
             buf.setLength(length)
             return true
           }
+          i += 1
+        }
+      }
       finally
         if (optional)
           context.endOptional()
@@ -62,12 +67,15 @@ object TTBPDateTimeFormatterBuilder {
       if (optional) {
         context.startOptional()
         var pos: Int = _position
-        for (pp <- printerParsers) {
+        var i = 0
+        while (i < printerParsers.length) {
+          val pp = printerParsers(i)
           pos = pp.parse(context, text, pos)
           if (pos < 0) {
             context.endOptional(false)
             return _position
           }
+          i += 1
         }
         context.endOptional(true)
         pos

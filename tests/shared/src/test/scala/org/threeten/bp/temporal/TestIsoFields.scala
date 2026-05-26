@@ -93,7 +93,7 @@ class TestIsoFields extends AnyFunSuite with AssertionsHelper {
           .appendLiteral('-')
           .appendValue(DAY_OF_WEEK)
           .toFormatter
-        val parsed: LocalDate    = LocalDate.parse(wby + "-" + week + "-" + dow.getValue, f)
+        val parsed: LocalDate    = LocalDate.parse(s"$wby-$week-${dow.getValue}", f)
         assertEquals(parsed, date)
       case _                                                                         =>
         fail()

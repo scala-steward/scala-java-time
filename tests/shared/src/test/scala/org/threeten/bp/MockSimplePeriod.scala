@@ -107,5 +107,5 @@ final class MockSimplePeriod private (private val amount: Long, private val unit
 
   override def hashCode: Int = unit.hashCode ^ (amount ^ (amount >>> 32)).toInt
 
-  override def toString: String = amount + " " + unit
+  override def toString: String = s"$amount $unit"
 }

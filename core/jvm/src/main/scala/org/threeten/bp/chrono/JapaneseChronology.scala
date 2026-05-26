@@ -64,7 +64,11 @@ import org.threeten.bp.temporal.ValueRange
 
 @SerialVersionUID(459996390165777884L)
 object JapaneseChronology {
-  private[chrono] val LOCALE: Locale = new Locale("ja", "JP", "JP")
+  private[chrono] val LOCALE: Locale = new Locale.Builder()
+    .setLanguage("ja")
+    .setRegion("JP")
+    .setVariant("JP")
+    .build()
 
   /** Singleton instance for Japanese chronology. */
   lazy val INSTANCE: JapaneseChronology = new JapaneseChronology

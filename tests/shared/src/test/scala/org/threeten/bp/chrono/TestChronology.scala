@@ -59,28 +59,22 @@ class TestChronology extends AnyFunSuite with BeforeAndAfterEach with Assertions
     )
 
   test("test_getters") {
-    data_of_calendars.foreach {
-      case (chronoId, calendarSystemType, _) =>
-        val chrono: Chronology = Chronology.of(chronoId)
-        assertNotNull(chrono)
-        assertEquals(chrono.getId, chronoId)
-        assertEquals(chrono.getCalendarType, calendarSystemType)
-      case _                                 =>
-        fail()
+    data_of_calendars.foreach { case (chronoId, calendarSystemType, _) =>
+      val chrono: Chronology = Chronology.of(chronoId)
+      assertNotNull(chrono)
+      assertEquals(chrono.getId, chronoId)
+      assertEquals(chrono.getCalendarType, calendarSystemType)
     }
   }
 
   test("test_required_calendars") {
-    data_of_calendars.foreach {
-      case (chronoId, calendarSystemType, _) =>
-        var chrono: Chronology              = Chronology.of(chronoId)
-        assertNotNull(chrono)
-        chrono = Chronology.of(calendarSystemType)
-        assertNotNull(chrono)
-        val cals: java.util.Set[Chronology] = Chronology.getAvailableChronologies
-        assertTrue(cals.contains(chrono))
-      case _                                 =>
-        fail()
+    data_of_calendars.foreach { case (chronoId, calendarSystemType, _) =>
+      var chrono: Chronology              = Chronology.of(chronoId)
+      assertNotNull(chrono)
+      chrono = Chronology.of(calendarSystemType)
+      assertNotNull(chrono)
+      val cals: java.util.Set[Chronology] = Chronology.getAvailableChronologies
+      assertTrue(cals.contains(chrono))
     }
   }
 
@@ -124,7 +118,8 @@ class TestChronology extends AnyFunSuite with BeforeAndAfterEach with Assertions
   }
 
   test("test_lookupLocale_jp_JP") {
-    val test: Chronology = Chronology.ofLocale(new Locale("ja", "JP"))
+    val test: Chronology =
+      Chronology.ofLocale(new Locale.Builder().setLanguage("ja").setRegion("JP").build())
     assertEquals(test.getId, "ISO")
     assertEquals(test, IsoChronology.INSTANCE)
   }

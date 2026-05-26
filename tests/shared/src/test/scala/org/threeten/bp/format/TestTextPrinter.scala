@@ -111,16 +111,13 @@ class TestTextPrinter extends AnyFunSuite with GenTestPrinterParser with Asserti
     )
 
   test("test_print") {
-    provider_dow.foreach {
-      case (field, style, value, expected) =>
-        super.beforeEach()
-        printContext.setDateTime(new MockFieldValue(field, value))
-        val pp: TTBPDateTimeFormatterBuilder.TextPrinterParser =
-          new TTBPDateTimeFormatterBuilder.TextPrinterParser(field, style, TestTextPrinter.PROVIDER)
-        pp.print(printContext, buf)
-        assertEquals(buf.toString, expected)
-      case _                               =>
-        fail()
+    provider_dow.foreach { case (field, style, value, expected) =>
+      super.beforeEach()
+      printContext.setDateTime(new MockFieldValue(field, value))
+      val pp: TTBPDateTimeFormatterBuilder.TextPrinterParser =
+        new TTBPDateTimeFormatterBuilder.TextPrinterParser(field, style, TestTextPrinter.PROVIDER)
+      pp.print(printContext, buf)
+      assertEquals(buf.toString, expected)
     }
   }
 

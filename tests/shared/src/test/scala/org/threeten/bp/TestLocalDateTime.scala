@@ -149,7 +149,7 @@ class TestLocalDateTime
     )
 
   override protected def invalidFields: List[TemporalField] = {
-    val list: List[TemporalField] = List(ChronoField.values: _*)
+    val list: List[TemporalField] = ChronoField.values.toList
     list.filterNot(validFields.contains)
   }
 

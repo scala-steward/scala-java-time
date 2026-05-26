@@ -124,15 +124,12 @@ class TestZoneIdParser extends AnyFunSuite with GenTestPrinterParser with Assert
   }
 
   test("test_parse_exactMatch") {
-    populateTestData.foreach {
-      case (parse, expected) =>
-        val pp: TTBPDateTimeFormatterBuilder.ZoneIdPrinterParser =
-          new TTBPDateTimeFormatterBuilder.ZoneIdPrinterParser(TemporalQueries.zoneId, null)
-        val result: Int                                          = pp.parse(parseContext, parse, 0)
-        assertEquals(result, parse.length)
-        assertParsed(expected)
-      case _                 =>
-        fail()
+    populateTestData.foreach { case (parse, expected) =>
+      val pp: TTBPDateTimeFormatterBuilder.ZoneIdPrinterParser =
+        new TTBPDateTimeFormatterBuilder.ZoneIdPrinterParser(TemporalQueries.zoneId, null)
+      val result: Int                                          = pp.parse(parseContext, parse, 0)
+      assertEquals(result, parse.length)
+      assertParsed(expected)
     }
   }
 

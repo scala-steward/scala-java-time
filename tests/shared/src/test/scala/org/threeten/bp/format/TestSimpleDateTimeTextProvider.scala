@@ -42,9 +42,9 @@ import org.threeten.bp.format.internal.TTBPDateTimeTextProvider
 
 /** Test TTBPSimpleDateTimeTextProvider. */
 class TestTTBPSimpleDateTimeTextProvider extends AnyFunSuite with AssertionsHelper {
-  private val enUS: Locale = new Locale("en", "US")
-  private val ptBR: Locale = new Locale("pt", "BR")
-  private val frFR: Locale = new Locale("fr", "FR")
+  private val enUS: Locale = new Locale.Builder().setLanguage("en").setRegion("US").build()
+  private val ptBR: Locale = new Locale.Builder().setLanguage("pt").setRegion("BR").build()
+  private val frFR: Locale = new Locale.Builder().setLanguage("fr").setRegion("FR").build()
 
   def data_text: List[(TemporalField, Long, TextStyle, Locale, String)] =
     List(
@@ -122,12 +122,17 @@ class TestTTBPSimpleDateTimeTextProvider extends AnyFunSuite with AssertionsHelp
     )
 
   test("getText") {
-    data_text.foreach {
-      case (field, value, style, locale, expected) =>
-        val tp: TTBPDateTimeTextProvider = TTBPDateTimeTextProvider.Provider
-        assertTrue(tp.getText(field, value, style, locale).equalsIgnoreCase(expected))
-      case _                                       =>
-        fail()
+    data_text.foreach { case (field, value, style, locale, expected) =>
+      val tp: TTBPDateTimeTextProvider = TTBPDateTimeTextProvider.Provider
+      assertTrue(tp.getText(field, value, style, locale).equalsIgnoreCase(expected))
     }
+  }
+
+  test("getTextIterator maps AM/PM text to correct field values") {
+    val tp: TTBPDateTimeTextProvider = TTBPDateTimeTextProvider.Provider
+    val iterator                     = tp.getTextIterator(AMPM_OF_DAY, TextStyle.SHORT, enUS)
+    val mappings                     = iterator.toList
+    assertEquals(mappings.find(_._1 == "AM"), Some(("AM", 0L)))
+    assertEquals(mappings.find(_._1 == "PM"), Some(("PM", 1L)))
   }
 }

@@ -69,7 +69,7 @@ class UsabilityBasic {
         var i: Int = 0
         while (i < 7) {
           {
-            row += date.getDayOfMonth + " "
+            row += s"${date.getDayOfMonth} "
             date = date.plusDays(1)
           }
           {

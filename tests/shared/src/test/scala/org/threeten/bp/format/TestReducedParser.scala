@@ -56,17 +56,14 @@ class TestReducedParser extends AnyFunSuite with GenTestPrinterParser with Asser
     )
 
   test("test_parse_error") {
-    data_error.foreach {
-      case (pp, text, pos, expected) =>
-        try pp.parse(parseContext, text, pos)
-        catch {
-          case ex: RuntimeException =>
-            assertTrue(expected.isInstance(ex))
-            assertEquals(parseContext.toParsed.query(TemporalQueries.chronology), null)
-            assertEquals(parseContext.toParsed.query(TemporalQueries.zoneId), null)
-        }
-      case _                         =>
-        fail()
+    data_error.foreach { case (pp, text, pos, expected) =>
+      try pp.parse(parseContext, text, pos)
+      catch {
+        case ex: RuntimeException =>
+          assertTrue(expected.isInstance(ex))
+          assertEquals(parseContext.toParsed.query(TemporalQueries.chronology), null)
+          assertEquals(parseContext.toParsed.query(TemporalQueries.zoneId), null)
+      }
     }
   }
 
@@ -277,14 +274,11 @@ class TestReducedParser extends AnyFunSuite with GenTestPrinterParser with Asser
   }
 
   test("test_parse") {
-    provider_parse.foreach {
-      case (pp, input, pos, parseLen, parseVal) =>
-        super.beforeEach()
-        val newPos: Int = pp.parse(parseContext, input, pos)
-        assertEquals(newPos, parseLen)
-        assertParsed(YEAR, if (parseVal != null) parseVal.toLong else null)
-      case _                                    =>
-        fail()
+    provider_parse.foreach { case (pp, input, pos, parseLen, parseVal) =>
+      super.beforeEach()
+      val newPos: Int = pp.parse(parseContext, input, pos)
+      assertEquals(newPos, parseLen)
+      assertParsed(YEAR, if (parseVal != null) parseVal.toLong else null)
     }
   }
 
@@ -472,15 +466,12 @@ class TestReducedParser extends AnyFunSuite with GenTestPrinterParser with Asser
   }
 
   test("test_parseLenient") {
-    provider_parseLenient.foreach {
-      case (pp, input, pos, parseLen, parseVal) =>
-        super.beforeEach()
-        parseContext.setStrict(false)
-        val newPos: Int = pp.parse(parseContext, input, pos)
-        assertEquals(newPos, parseLen)
-        assertParsed(YEAR, if (parseVal != null) parseVal.toLong else null)
-      case _                                    =>
-        fail()
+    provider_parseLenient.foreach { case (pp, input, pos, parseLen, parseVal) =>
+      super.beforeEach()
+      parseContext.setStrict(false)
+      val newPos: Int = pp.parse(parseContext, input, pos)
+      assertEquals(newPos, parseLen)
+      assertParsed(YEAR, if (parseVal != null) parseVal.toLong else null)
     }
   }
 

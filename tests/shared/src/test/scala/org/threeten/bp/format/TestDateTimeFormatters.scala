@@ -246,17 +246,14 @@ class TestDateTimeFormatters extends AnyFunSuite with GenTestPrinterParser with 
   }
 
   test("test_parse_isoLocalDate") {
-    provider_sample_isoLocalDate.foreach {
-      case (year, month, day, _, _, input, _) =>
-        if (input != null) {
-          val expected: TestDateTimeFormatters.Expected = createDate(year, month, day)
-          assertParseMatch(
-            DateTimeFormatter.ISO_LOCAL_DATE.parseUnresolved(input, new ParsePosition(0)),
-            expected
-          )
-        }
-      case _                                  =>
-        fail()
+    provider_sample_isoLocalDate.foreach { case (year, month, day, _, _, input, _) =>
+      if (input != null) {
+        val expected: TestDateTimeFormatters.Expected = createDate(year, month, day)
+        assertParseMatch(
+          DateTimeFormatter.ISO_LOCAL_DATE.parseUnresolved(input, new ParsePosition(0)),
+          expected
+        )
+      }
     }
   }
 
@@ -338,24 +335,19 @@ class TestDateTimeFormatters extends AnyFunSuite with GenTestPrinterParser with 
             case ex: Exception =>
               assertTrue(expectedEx.isInstance(ex))
           }
-      case _                                                          =>
-        fail()
     }
   }
 
   test("test_parse_isoOffsetDate") {
-    provider_sample_isoOffsetDate.foreach {
-      case (year, month, day, offsetId, _, input, _) =>
-        if (input != null) {
-          val expected: TestDateTimeFormatters.Expected = createDate(year, month, day)
-          buildCalendrical(expected, offsetId, null)
-          assertParseMatch(
-            DateTimeFormatter.ISO_OFFSET_DATE.parseUnresolved(input, new ParsePosition(0)),
-            expected
-          )
-        }
-      case _                                         =>
-        fail()
+    provider_sample_isoOffsetDate.foreach { case (year, month, day, offsetId, _, input, _) =>
+      if (input != null) {
+        val expected: TestDateTimeFormatters.Expected = createDate(year, month, day)
+        buildCalendrical(expected, offsetId, null)
+        assertParseMatch(
+          DateTimeFormatter.ISO_OFFSET_DATE.parseUnresolved(input, new ParsePosition(0)),
+          expected
+        )
+      }
     }
   }
 
@@ -390,24 +382,19 @@ class TestDateTimeFormatters extends AnyFunSuite with GenTestPrinterParser with 
             case ex: Exception =>
               assertTrue(expectedEx.isInstance(ex))
           }
-      case _                                                          =>
-        fail()
     }
   }
 
   test("test_parse_isoDate") {
-    provider_sample_isoDate.foreach {
-      case (year, month, day, offsetId, _, input, _) =>
-        if (input != null) {
-          val expected: TestDateTimeFormatters.Expected = createDate(year, month, day)
-          if (offsetId != null)
-            expected.fieldValues.put(OFFSET_SECONDS, ZoneOffset.of(offsetId).getTotalSeconds.toLong)
-          assertParseMatch(DateTimeFormatter.ISO_DATE.parseUnresolved(input, new ParsePosition(0)),
-                           expected
-          )
-        }
-      case _                                         =>
-        fail()
+    provider_sample_isoDate.foreach { case (year, month, day, offsetId, _, input, _) =>
+      if (input != null) {
+        val expected: TestDateTimeFormatters.Expected = createDate(year, month, day)
+        if (offsetId != null)
+          expected.fieldValues.put(OFFSET_SECONDS, ZoneOffset.of(offsetId).getTotalSeconds.toLong)
+        assertParseMatch(DateTimeFormatter.ISO_DATE.parseUnresolved(input, new ParsePosition(0)),
+                         expected
+        )
+      }
     }
   }
 
@@ -453,23 +440,18 @@ class TestDateTimeFormatters extends AnyFunSuite with GenTestPrinterParser with 
             case ex: Exception =>
               assertTrue(expectedEx.isInstance(ex))
           }
-      case _                                                              =>
-        fail()
     }
   }
 
   test("test_parse_isoLocalTime") {
-    provider_sample_isoLocalTime.foreach {
-      case (hour, min, sec, nano, _, _, input, _) =>
-        if (input != null) {
-          val expected: TestDateTimeFormatters.Expected = createTime(hour, min, sec, nano)
-          assertParseMatch(
-            DateTimeFormatter.ISO_LOCAL_TIME.parseUnresolved(input, new ParsePosition(0)),
-            expected
-          )
-        }
-      case _                                      =>
-        fail()
+    provider_sample_isoLocalTime.foreach { case (hour, min, sec, nano, _, _, input, _) =>
+      if (input != null) {
+        val expected: TestDateTimeFormatters.Expected = createTime(hour, min, sec, nano)
+        assertParseMatch(
+          DateTimeFormatter.ISO_LOCAL_TIME.parseUnresolved(input, new ParsePosition(0)),
+          expected
+        )
+      }
     }
   }
 
@@ -515,24 +497,19 @@ class TestDateTimeFormatters extends AnyFunSuite with GenTestPrinterParser with 
             case ex: Exception =>
               assertTrue(expectedEx.isInstance(ex))
           }
-      case _                                                              =>
-        fail()
     }
   }
 
   test("test_parse_isoOffsetTime") {
-    provider_sample_isoOffsetTime.foreach {
-      case (hour, min, sec, nano, offsetId, _, input, _) =>
-        if (input != null) {
-          val expected: TestDateTimeFormatters.Expected = createTime(hour, min, sec, nano)
-          buildCalendrical(expected, offsetId, null)
-          assertParseMatch(
-            DateTimeFormatter.ISO_OFFSET_TIME.parseUnresolved(input, new ParsePosition(0)),
-            expected
-          )
-        }
-      case _                                             =>
-        fail()
+    provider_sample_isoOffsetTime.foreach { case (hour, min, sec, nano, offsetId, _, input, _) =>
+      if (input != null) {
+        val expected: TestDateTimeFormatters.Expected = createTime(hour, min, sec, nano)
+        buildCalendrical(expected, offsetId, null)
+        assertParseMatch(
+          DateTimeFormatter.ISO_OFFSET_TIME.parseUnresolved(input, new ParsePosition(0)),
+          expected
+        )
+      }
     }
   }
 
@@ -578,24 +555,19 @@ class TestDateTimeFormatters extends AnyFunSuite with GenTestPrinterParser with 
             case ex: Exception =>
               assertTrue(expectedEx.isInstance(ex))
           }
-      case _                                                              =>
-        fail()
     }
   }
 
   test("test_parse_isoTime") {
-    provider_sample_isoTime.foreach {
-      case (hour, min, sec, nano, offsetId, _, input, _) =>
-        if (input != null) {
-          val expected: TestDateTimeFormatters.Expected = createTime(hour, min, sec, nano)
-          if (offsetId != null)
-            expected.fieldValues.put(OFFSET_SECONDS, ZoneOffset.of(offsetId).getTotalSeconds.toLong)
-          assertParseMatch(DateTimeFormatter.ISO_TIME.parseUnresolved(input, new ParsePosition(0)),
-                           expected
-          )
-        }
-      case _                                             =>
-        fail()
+    provider_sample_isoTime.foreach { case (hour, min, sec, nano, offsetId, _, input, _) =>
+      if (input != null) {
+        val expected: TestDateTimeFormatters.Expected = createTime(hour, min, sec, nano)
+        if (offsetId != null)
+          expected.fieldValues.put(OFFSET_SECONDS, ZoneOffset.of(offsetId).getTotalSeconds.toLong)
+        assertParseMatch(DateTimeFormatter.ISO_TIME.parseUnresolved(input, new ParsePosition(0)),
+                         expected
+        )
+      }
     }
   }
 
@@ -672,8 +644,6 @@ class TestDateTimeFormatters extends AnyFunSuite with GenTestPrinterParser with 
             case ex: Exception =>
               assertTrue(expectedEx.isInstance(ex))
           }
-      case _                                                                                =>
-        fail()
     }
   }
 
@@ -688,8 +658,6 @@ class TestDateTimeFormatters extends AnyFunSuite with GenTestPrinterParser with 
             expected
           )
         }
-      case _                                                        =>
-        fail()
     }
   }
 
@@ -788,8 +756,6 @@ class TestDateTimeFormatters extends AnyFunSuite with GenTestPrinterParser with 
             case ex: Exception =>
               assertTrue(expectedEx.isInstance(ex))
           }
-      case _                                                                                =>
-        fail()
     }
   }
 
@@ -805,8 +771,6 @@ class TestDateTimeFormatters extends AnyFunSuite with GenTestPrinterParser with 
             expected
           )
         }
-      case _                                                               =>
-        fail()
     }
   }
 
@@ -942,8 +906,6 @@ class TestDateTimeFormatters extends AnyFunSuite with GenTestPrinterParser with 
             case ex: Exception =>
               assertTrue(expectedEx.isInstance(ex))
           }
-      case _                                                                                =>
-        fail()
     }
   }
 
@@ -962,8 +924,6 @@ class TestDateTimeFormatters extends AnyFunSuite with GenTestPrinterParser with 
             expected
           )
         }
-      case _                                                                    =>
-        fail()
     }
   }
 
@@ -1084,8 +1044,6 @@ class TestDateTimeFormatters extends AnyFunSuite with GenTestPrinterParser with 
             case ex: Exception =>
               assertTrue(expectedEx.isInstance(ex))
           }
-      case _                                                                                =>
-        fail()
     }
   }
 
@@ -1105,8 +1063,6 @@ class TestDateTimeFormatters extends AnyFunSuite with GenTestPrinterParser with 
             expected
           )
         }
-      case _                                                                    =>
-        fail()
     }
   }
 

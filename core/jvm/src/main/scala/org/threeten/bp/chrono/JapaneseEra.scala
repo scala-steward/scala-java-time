@@ -118,9 +118,14 @@ object JapaneseEra {
    */
   def valueOf(japaneseEra: String): JapaneseEra = {
     Objects.requireNonNull(japaneseEra, "japaneseEra")
-    for (era <- KNOWN_ERAS.get)
+    var i = 0
+    val knownEras = KNOWN_ERAS.get
+    while(i < knownEras.length) {
+      val era = knownEras(i)
       if (japaneseEra == era.name)
         return era
+      i += 1
+    }
     throw new IllegalArgumentException(s"Era not found: $japaneseEra")
   }
 

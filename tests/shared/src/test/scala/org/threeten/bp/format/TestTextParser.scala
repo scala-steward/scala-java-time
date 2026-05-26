@@ -70,17 +70,14 @@ class TestTextParser extends AnyFunSuite with GenTestPrinterParser with Assertio
     )
 
   test("test_parse_error") {
-    data_error.foreach {
-      case (pp, text, pos, expected) =>
-        try pp.parse(parseContext, text, pos)
-        catch {
-          case ex: RuntimeException =>
-            assertTrue(expected.isInstance(ex))
-            assertEquals(parseContext.toParsed.query(TemporalQueries.chronology), null)
-            assertEquals(parseContext.toParsed.query(TemporalQueries.zoneId), null)
-        }
-      case _                         =>
-        fail()
+    data_error.foreach { case (pp, text, pos, expected) =>
+      try pp.parse(parseContext, text, pos)
+      catch {
+        case ex: RuntimeException =>
+          assertTrue(expected.isInstance(ex))
+          assertEquals(parseContext.toParsed.query(TemporalQueries.chronology), null)
+          assertEquals(parseContext.toParsed.query(TemporalQueries.zoneId), null)
+      }
     }
   }
 
@@ -177,92 +174,74 @@ class TestTextParser extends AnyFunSuite with GenTestPrinterParser with Assertio
     )
 
   test("test_parseText") {
-    provider_text.foreach {
-      case (field, style, value, input) =>
-        super.beforeEach()
-        val pp: TTBPDateTimeFormatterBuilder.TextPrinterParser =
-          new TTBPDateTimeFormatterBuilder.TextPrinterParser(field, style, TestTextParser.PROVIDER)
-        val newPos: Int                                        = pp.parse(parseContext, input, 0)
-        assertEquals(newPos, input.length)
-        assertParsed(parseContext, field, value.toLong)
-      case _                            =>
-        fail()
+    provider_text.foreach { case (field, style, value, input) =>
+      super.beforeEach()
+      val pp: TTBPDateTimeFormatterBuilder.TextPrinterParser =
+        new TTBPDateTimeFormatterBuilder.TextPrinterParser(field, style, TestTextParser.PROVIDER)
+      val newPos: Int                                        = pp.parse(parseContext, input, 0)
+      assertEquals(newPos, input.length)
+      assertParsed(parseContext, field, value.toLong)
     }
   }
 
   test("test_parseNumber") {
-    provider_number.foreach {
-      case (field, style, value, input) =>
-        super.beforeEach()
-        val pp: TTBPDateTimeFormatterBuilder.TextPrinterParser =
-          new TTBPDateTimeFormatterBuilder.TextPrinterParser(field, style, TestTextParser.PROVIDER)
-        val newPos: Int                                        = pp.parse(parseContext, input, 0)
-        assertEquals(newPos, input.length)
-        assertParsed(parseContext, field, value.toLong)
-      case _                            =>
-        fail()
+    provider_number.foreach { case (field, style, value, input) =>
+      super.beforeEach()
+      val pp: TTBPDateTimeFormatterBuilder.TextPrinterParser =
+        new TTBPDateTimeFormatterBuilder.TextPrinterParser(field, style, TestTextParser.PROVIDER)
+      val newPos: Int                                        = pp.parse(parseContext, input, 0)
+      assertEquals(newPos, input.length)
+      assertParsed(parseContext, field, value.toLong)
     }
   }
 
   test("test_parse_strict_caseSensitive_parseUpper") {
-    provider_text.foreach {
-      case (field, style, _, input) =>
-        super.beforeEach()
-        parseContext.setCaseSensitive(true)
-        val pp: TTBPDateTimeFormatterBuilder.TextPrinterParser =
-          new TTBPDateTimeFormatterBuilder.TextPrinterParser(field, style, TestTextParser.PROVIDER)
-        val newPos: Int                                        = pp.parse(parseContext, input.toUpperCase, 0)
-        assertEquals(newPos, ~0)
-        assertEquals(parseContext.toParsed.query(TemporalQueries.chronology), null)
-        assertEquals(parseContext.toParsed.query(TemporalQueries.zoneId), null)
-      case _                        =>
-        fail()
+    provider_text.foreach { case (field, style, _, input) =>
+      super.beforeEach()
+      parseContext.setCaseSensitive(true)
+      val pp: TTBPDateTimeFormatterBuilder.TextPrinterParser =
+        new TTBPDateTimeFormatterBuilder.TextPrinterParser(field, style, TestTextParser.PROVIDER)
+      val newPos: Int                                        = pp.parse(parseContext, input.toUpperCase, 0)
+      assertEquals(newPos, ~0)
+      assertEquals(parseContext.toParsed.query(TemporalQueries.chronology), null)
+      assertEquals(parseContext.toParsed.query(TemporalQueries.zoneId), null)
     }
   }
 
   test("test_parse_strict_caseInsensitive_parseUpper") {
-    provider_text.foreach {
-      case (field, style, value, input) =>
-        super.beforeEach()
-        parseContext.setCaseSensitive(false)
-        val pp: TTBPDateTimeFormatterBuilder.TextPrinterParser =
-          new TTBPDateTimeFormatterBuilder.TextPrinterParser(field, style, TestTextParser.PROVIDER)
-        val newPos: Int                                        = pp.parse(parseContext, input.toUpperCase, 0)
-        assertEquals(newPos, input.length)
-        assertParsed(parseContext, field, value.toLong)
-      case _                            =>
-        fail()
+    provider_text.foreach { case (field, style, value, input) =>
+      super.beforeEach()
+      parseContext.setCaseSensitive(false)
+      val pp: TTBPDateTimeFormatterBuilder.TextPrinterParser =
+        new TTBPDateTimeFormatterBuilder.TextPrinterParser(field, style, TestTextParser.PROVIDER)
+      val newPos: Int                                        = pp.parse(parseContext, input.toUpperCase, 0)
+      assertEquals(newPos, input.length)
+      assertParsed(parseContext, field, value.toLong)
     }
   }
 
   test("test_parse_strict_caseSensitive_parseLower") {
-    provider_text.foreach {
-      case (field, style, _, input) =>
-        super.beforeEach()
-        parseContext.setCaseSensitive(true)
-        val pp: TTBPDateTimeFormatterBuilder.TextPrinterParser =
-          new TTBPDateTimeFormatterBuilder.TextPrinterParser(field, style, TestTextParser.PROVIDER)
-        val newPos: Int                                        = pp.parse(parseContext, input.toLowerCase, 0)
-        assertEquals(newPos, ~0)
-        assertEquals(parseContext.toParsed.query(TemporalQueries.chronology), null)
-        assertEquals(parseContext.toParsed.query(TemporalQueries.zoneId), null)
-      case _                        =>
-        fail()
+    provider_text.foreach { case (field, style, _, input) =>
+      super.beforeEach()
+      parseContext.setCaseSensitive(true)
+      val pp: TTBPDateTimeFormatterBuilder.TextPrinterParser =
+        new TTBPDateTimeFormatterBuilder.TextPrinterParser(field, style, TestTextParser.PROVIDER)
+      val newPos: Int                                        = pp.parse(parseContext, input.toLowerCase, 0)
+      assertEquals(newPos, ~0)
+      assertEquals(parseContext.toParsed.query(TemporalQueries.chronology), null)
+      assertEquals(parseContext.toParsed.query(TemporalQueries.zoneId), null)
     }
   }
 
   test("test_parse_strict_caseInsensitive_parseLower") {
-    provider_text.foreach {
-      case (field, style, value, input) =>
-        super.beforeEach()
-        parseContext.setCaseSensitive(false)
-        val pp: TTBPDateTimeFormatterBuilder.TextPrinterParser =
-          new TTBPDateTimeFormatterBuilder.TextPrinterParser(field, style, TestTextParser.PROVIDER)
-        val newPos: Int                                        = pp.parse(parseContext, input.toLowerCase, 0)
-        assertEquals(newPos, input.length)
-        assertParsed(parseContext, field, value.toLong)
-      case _                            =>
-        fail()
+    provider_text.foreach { case (field, style, value, input) =>
+      super.beforeEach()
+      parseContext.setCaseSensitive(false)
+      val pp: TTBPDateTimeFormatterBuilder.TextPrinterParser =
+        new TTBPDateTimeFormatterBuilder.TextPrinterParser(field, style, TestTextParser.PROVIDER)
+      val newPos: Int                                        = pp.parse(parseContext, input.toLowerCase, 0)
+      assertEquals(newPos, input.length)
+      assertParsed(parseContext, field, value.toLong)
     }
   }
 

@@ -51,11 +51,9 @@ class TestDateTimeFormatterBuilder
     extends AnyFunSuite
     with AssertionsHelper
     with BeforeAndAfterEach {
-  // We need these ugly converters to fit the signatures in everycase
-  implicit def convLongMap(al: Map[Long, String]): java.util.Map[java.lang.Long, String] =
+
+  def convLongMap(al: Map[Long, String]): java.util.Map[java.lang.Long, String] =
     al.map(k => (Long.box(k._1), k._2)).asJava
-  implicit def convSLongMap(al: Map[Long, String]): java.util.Map[Long, String]          =
-    al.map(k => (k._1, k._2)).asJava
 
   private var builder: DateTimeFormatterBuilder = null
 
@@ -327,20 +325,20 @@ class TestDateTimeFormatterBuilder
                   11L -> "NVR",
                   12L -> "DBR"
     )
-    builder.appendText(MONTH_OF_YEAR, map)
+    builder.appendText(MONTH_OF_YEAR, convLongMap(map))
     val f: DateTimeFormatter = builder.toFormatter
     assertEquals(f.toString, "Text(MonthOfYear)")
   }
 
   test("test_appendTextMap_nullRule") {
     assertThrows[NullPointerException] {
-      builder.appendText(null, Map.empty[Long, String])
+      builder.appendText(null, convLongMap(Map.empty[Long, String]))
     }
   }
 
   test("test_appendTextMap_nullStyle") {
     assertThrows[Platform.NPE] {
-      builder.appendText(MONTH_OF_YEAR, null: Map[Long, String])
+      builder.appendText(MONTH_OF_YEAR, convLongMap(null: Map[Long, String]))
     }
   }
 
@@ -646,14 +644,11 @@ class TestDateTimeFormatterBuilder
     )
 
   test("test_appendPattern_valid") {
-    dataValid.foreach {
-      case (input, expected) =>
-        beforeEach()
-        builder.appendPattern(input)
-        val f: DateTimeFormatter = builder.toFormatter
-        assertEquals(f.toString, expected)
-      case _                 =>
-        fail()
+    dataValid.foreach { case (input, expected) =>
+      beforeEach()
+      builder.appendPattern(input)
+      val f: DateTimeFormatter = builder.toFormatter
+      assertEquals(f.toString, expected)
     }
   }
 
