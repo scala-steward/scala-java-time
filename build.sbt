@@ -1,7 +1,7 @@
-val scala213 = "2.13.14"
-val scala3   = "3.3.3"
+val scala213 = "2.13.18"
+val scala3   = "3.3.7"
 ThisBuild / scalaVersion       := scala213
-ThisBuild / crossScalaVersions := Seq("2.12.17", scala213, scala3)
+ThisBuild / crossScalaVersions := Seq("2.12.21", scala213, scala3)
 
 ThisBuild / tlBaseVersion := "2.6"
 
@@ -230,7 +230,7 @@ lazy val tests = crossProject(JVMPlatform, JSPlatform, NativePlatform)
     name               := "tests",
     Keys.`package`     := file(""),
     libraryDependencies +=
-      "org.scalatest" %%% "scalatest" % "3.2.18" % Test,
+      "org.scalatest" %%% "scalatest" % "3.2.20" % Test,
     scalacOptions ~= (_.filterNot(
       Set("-Wnumeric-widen", "-Ywarn-numeric-widen", "-Ywarn-value-discard", "-Wvalue-discard")
     ))
