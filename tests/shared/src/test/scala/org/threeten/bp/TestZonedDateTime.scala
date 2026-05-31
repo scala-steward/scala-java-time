@@ -196,7 +196,7 @@ class TestZonedDateTime
     )
 
   protected def invalidFields: List[TemporalField] =
-    List(ChronoField.values: _*).filterNot(validFields.contains)
+    ChronoField.values.toList.filterNot(validFields.contains)
 
   test("now") {
     var expected: ZonedDateTime = ZonedDateTime.now(Clock.systemDefaultZone)

@@ -67,7 +67,7 @@ class TestInstant
     List(NANO_OF_SECOND, MICRO_OF_SECOND, MILLI_OF_SECOND, INSTANT_SECONDS)
 
   protected def invalidFields: List[TemporalField] = {
-    val list: List[TemporalField] = List(ChronoField.values: _*)
+    val list: List[TemporalField] = ChronoField.values.toList
     (list :+ JulianFields.JULIAN_DAY :+ JulianFields.MODIFIED_JULIAN_DAY :+ JulianFields.RATA_DIE)
       .filterNot(validFields.contains)
   }

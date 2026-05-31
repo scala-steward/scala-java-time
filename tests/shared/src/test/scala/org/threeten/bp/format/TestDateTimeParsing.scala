@@ -171,47 +171,35 @@ class TestDateTimeParsing extends AnyFunSuite with GenTestPrinterParser with Ass
     )
 
   test("test_parse_instantZones_ZDT") {
-    data_instantZones.foreach {
-      case (formatter, text, expected) =>
-        val actual: TemporalAccessor = formatter.parse(text)
-        assertEquals(ZonedDateTime.from(actual), expected)
-      case _                           =>
-        fail()
+    data_instantZones.foreach { case (formatter, text, expected) =>
+      val actual: TemporalAccessor = formatter.parse(text)
+      assertEquals(ZonedDateTime.from(actual), expected)
     }
   }
 
   test("test_parse_instantZones_LDT") {
-    data_instantZones.foreach {
-      case (formatter, text, expected) =>
-        val actual: TemporalAccessor = formatter.parse(text)
-        assertEquals(LocalDateTime.from(actual), expected.toLocalDateTime)
-      case _                           =>
-        fail()
+    data_instantZones.foreach { case (formatter, text, expected) =>
+      val actual: TemporalAccessor = formatter.parse(text)
+      assertEquals(LocalDateTime.from(actual), expected.toLocalDateTime)
     }
   }
 
   test("test_parse_instantZones_Instant") {
-    data_instantZones.foreach {
-      case (formatter, text, expected) =>
-        val actual: TemporalAccessor = formatter.parse(text)
-        assertEquals(Instant.from(actual), expected.toInstant)
-      case _                           =>
-        fail()
+    data_instantZones.foreach { case (formatter, text, expected) =>
+      val actual: TemporalAccessor = formatter.parse(text)
+      assertEquals(Instant.from(actual), expected.toInstant)
     }
   }
 
   test("test_parse_instantZones_supported") {
-    data_instantZones.foreach {
-      case (formatter, text, _) =>
-        val actual: TemporalAccessor = formatter.parse(text)
-        assertEquals(actual.isSupported(INSTANT_SECONDS), true)
-        assertEquals(actual.isSupported(EPOCH_DAY), true)
-        assertEquals(actual.isSupported(SECOND_OF_DAY), true)
-        assertEquals(actual.isSupported(NANO_OF_SECOND), true)
-        assertEquals(actual.isSupported(MICRO_OF_SECOND), true)
-        assertEquals(actual.isSupported(MILLI_OF_SECOND), true)
-      case _                    =>
-        fail()
+    data_instantZones.foreach { case (formatter, text, _) =>
+      val actual: TemporalAccessor = formatter.parse(text)
+      assertEquals(actual.isSupported(INSTANT_SECONDS), true)
+      assertEquals(actual.isSupported(EPOCH_DAY), true)
+      assertEquals(actual.isSupported(SECOND_OF_DAY), true)
+      assertEquals(actual.isSupported(NANO_OF_SECOND), true)
+      assertEquals(actual.isSupported(MICRO_OF_SECOND), true)
+      assertEquals(actual.isSupported(MILLI_OF_SECOND), true)
     }
   }
 
@@ -229,51 +217,39 @@ class TestDateTimeParsing extends AnyFunSuite with GenTestPrinterParser with Ass
     )
 
   test("test_parse_instantNoZone_ZDT") {
-    data_instantNoZone.foreach {
-      case (formatter, text, _) =>
-        assertThrows[DateTimeException] {
-          val actual: TemporalAccessor = formatter.parse(text)
-          ZonedDateTime.from(actual)
-        }
-      case _                    =>
-        fail()
+    data_instantNoZone.foreach { case (formatter, text, _) =>
+      assertThrows[DateTimeException] {
+        val actual: TemporalAccessor = formatter.parse(text)
+        ZonedDateTime.from(actual)
+      }
     }
   }
 
   test("test_parse_instantNoZone_LDT") {
-    data_instantNoZone.foreach {
-      case (formatter, text, _) =>
-        assertThrows[DateTimeException] {
-          val actual: TemporalAccessor = formatter.parse(text)
-          LocalDateTime.from(actual)
-        }
-      case _                    =>
-        fail()
+    data_instantNoZone.foreach { case (formatter, text, _) =>
+      assertThrows[DateTimeException] {
+        val actual: TemporalAccessor = formatter.parse(text)
+        LocalDateTime.from(actual)
+      }
     }
   }
 
   test("test_parse_instantNoZone_Instant") {
-    data_instantNoZone.foreach {
-      case (formatter, text, expected) =>
-        val actual: TemporalAccessor = formatter.parse(text)
-        assertEquals(Instant.from(actual), expected)
-      case _                           =>
-        fail()
+    data_instantNoZone.foreach { case (formatter, text, expected) =>
+      val actual: TemporalAccessor = formatter.parse(text)
+      assertEquals(Instant.from(actual), expected)
     }
   }
 
   test("test_parse_instantNoZone_supported") {
-    data_instantNoZone.foreach {
-      case (formatter, text, _) =>
-        val actual: TemporalAccessor = formatter.parse(text)
-        assertEquals(actual.isSupported(INSTANT_SECONDS), true)
-        assertEquals(actual.isSupported(EPOCH_DAY), false)
-        assertEquals(actual.isSupported(SECOND_OF_DAY), false)
-        assertEquals(actual.isSupported(NANO_OF_SECOND), true)
-        assertEquals(actual.isSupported(MICRO_OF_SECOND), true)
-        assertEquals(actual.isSupported(MILLI_OF_SECOND), true)
-      case _                    =>
-        fail()
+    data_instantNoZone.foreach { case (formatter, text, _) =>
+      val actual: TemporalAccessor = formatter.parse(text)
+      assertEquals(actual.isSupported(INSTANT_SECONDS), true)
+      assertEquals(actual.isSupported(EPOCH_DAY), false)
+      assertEquals(actual.isSupported(SECOND_OF_DAY), false)
+      assertEquals(actual.isSupported(NANO_OF_SECOND), true)
+      assertEquals(actual.isSupported(MICRO_OF_SECOND), true)
+      assertEquals(actual.isSupported(MILLI_OF_SECOND), true)
     }
   }
 

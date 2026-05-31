@@ -105,7 +105,7 @@ class TestOffsetTime
     )
 
   protected def invalidFields: List[TemporalField] =
-    List(ChronoField.values: _*).filterNot(validFields.contains)
+    ChronoField.values.toList.filterNot(validFields.contains)
 
   test("constant_MIN") {
     check(OffsetTime.MIN, 0, 0, 0, 0, ZoneOffset.MAX)

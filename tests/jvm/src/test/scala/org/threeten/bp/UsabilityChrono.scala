@@ -72,7 +72,7 @@ object UsabilityChrono {
       var row: String = ""
       var i: Int      = 0
       while (i < 7) {
-        row += date.get(ChronoField.DAY_OF_MONTH) + " "
+        row += s"${date.get(ChronoField.DAY_OF_MONTH)} "
         date = date.plus(1, ChronoUnit.DAYS)
         i += 1
       }

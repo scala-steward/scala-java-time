@@ -57,17 +57,14 @@ class TestZoneOffsetParser extends AnyFunSuite with GenTestPrinterParser with As
     )
 
   test("test_parse_error") {
-    data_error.foreach {
-      case (pp, text, pos, expected) =>
-        try pp.parse(parseContext, text, pos)
-        catch {
-          case ex: Throwable =>
-            assertTrue(expected.isAssignableFrom(ex.getClass))
-            assertEquals(parseContext.toParsed.query(TemporalQueries.chronology), null)
-            assertEquals(parseContext.toParsed.query(TemporalQueries.zoneId), null)
-        }
-      case _                         =>
-        fail()
+    data_error.foreach { case (pp, text, pos, expected) =>
+      try pp.parse(parseContext, text, pos)
+      catch {
+        case ex: Throwable =>
+          assertTrue(expected.isAssignableFrom(ex.getClass))
+          assertEquals(parseContext.toParsed.query(TemporalQueries.chronology), null)
+          assertEquals(parseContext.toParsed.query(TemporalQueries.zoneId), null)
+      }
     }
   }
 
@@ -200,114 +197,90 @@ class TestZoneOffsetParser extends AnyFunSuite with GenTestPrinterParser with As
     )
 
   test("test_parse_exactMatch") {
-    provider_offsets.foreach {
-      case (pattern, parse, expected) =>
-        super.beforeEach()
-        val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
-          new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("Z", pattern)
-        val result: Int                                            = pp.parse(parseContext, parse, 0)
-        assertEquals(result, parse.length)
-        assertParsed(expected)
-      case _                          =>
-        fail()
+    provider_offsets.foreach { case (pattern, parse, expected) =>
+      super.beforeEach()
+      val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
+        new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("Z", pattern)
+      val result: Int                                            = pp.parse(parseContext, parse, 0)
+      assertEquals(result, parse.length)
+      assertParsed(expected)
     }
   }
 
   test("test_parse_startStringMatch") {
-    provider_offsets.foreach {
-      case (pattern, parse, expected) =>
-        super.beforeEach()
-        val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
-          new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("Z", pattern)
-        val result: Int                                            = pp.parse(parseContext, parse + ":OTHER", 0)
-        assertEquals(result, parse.length)
-        assertParsed(expected)
-      case _                          =>
-        fail()
+    provider_offsets.foreach { case (pattern, parse, expected) =>
+      super.beforeEach()
+      val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
+        new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("Z", pattern)
+      val result: Int                                            = pp.parse(parseContext, parse + ":OTHER", 0)
+      assertEquals(result, parse.length)
+      assertParsed(expected)
     }
   }
 
   test("test_parse_midStringMatch") {
-    provider_offsets.foreach {
-      case (pattern, parse, expected) =>
-        super.beforeEach()
-        val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
-          new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("Z", pattern)
-        val result: Int                                            = pp.parse(parseContext, "OTHER" + parse + ":OTHER", 5)
-        assertEquals(result, parse.length + 5)
-        assertParsed(expected)
-      case _                          =>
-        fail()
+    provider_offsets.foreach { case (pattern, parse, expected) =>
+      super.beforeEach()
+      val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
+        new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("Z", pattern)
+      val result: Int                                            = pp.parse(parseContext, "OTHER" + parse + ":OTHER", 5)
+      assertEquals(result, parse.length + 5)
+      assertParsed(expected)
     }
   }
 
   test("test_parse_endStringMatch") {
-    provider_offsets.foreach {
-      case (pattern, parse, expected) =>
-        super.beforeEach()
-        val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
-          new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("Z", pattern)
-        val result: Int                                            = pp.parse(parseContext, "OTHER" + parse, 5)
-        assertEquals(result, parse.length + 5)
-        assertParsed(expected)
-      case _                          =>
-        fail()
+    provider_offsets.foreach { case (pattern, parse, expected) =>
+      super.beforeEach()
+      val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
+        new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("Z", pattern)
+      val result: Int                                            = pp.parse(parseContext, "OTHER" + parse, 5)
+      assertEquals(result, parse.length + 5)
+      assertParsed(expected)
     }
   }
 
   test("test_parse_exactMatch_EmptyUTC") {
-    provider_offsets.foreach {
-      case (pattern, parse, expected) =>
-        super.beforeEach()
-        val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
-          new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("", pattern)
-        val result: Int                                            = pp.parse(parseContext, parse, 0)
-        assertEquals(result, parse.length)
-        assertParsed(expected)
-      case _                          =>
-        fail()
+    provider_offsets.foreach { case (pattern, parse, expected) =>
+      super.beforeEach()
+      val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
+        new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("", pattern)
+      val result: Int                                            = pp.parse(parseContext, parse, 0)
+      assertEquals(result, parse.length)
+      assertParsed(expected)
     }
   }
 
   test("test_parse_startStringMatch_EmptyUTC") {
-    provider_offsets.foreach {
-      case (pattern, parse, expected) =>
-        super.beforeEach()
-        val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
-          new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("", pattern)
-        val result: Int                                            = pp.parse(parseContext, parse + ":OTHER", 0)
-        assertEquals(result, parse.length)
-        assertParsed(expected)
-      case _                          =>
-        fail()
+    provider_offsets.foreach { case (pattern, parse, expected) =>
+      super.beforeEach()
+      val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
+        new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("", pattern)
+      val result: Int                                            = pp.parse(parseContext, parse + ":OTHER", 0)
+      assertEquals(result, parse.length)
+      assertParsed(expected)
     }
   }
 
   test("test_parse_midStringMatch_EmptyUTC") {
-    provider_offsets.foreach {
-      case (pattern, parse, expected) =>
-        super.beforeEach()
-        val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
-          new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("", pattern)
-        val result: Int                                            = pp.parse(parseContext, "OTHER" + parse + ":OTHER", 5)
-        assertEquals(result, parse.length + 5)
-        assertParsed(expected)
-      case _                          =>
-        fail()
+    provider_offsets.foreach { case (pattern, parse, expected) =>
+      super.beforeEach()
+      val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
+        new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("", pattern)
+      val result: Int                                            = pp.parse(parseContext, "OTHER" + parse + ":OTHER", 5)
+      assertEquals(result, parse.length + 5)
+      assertParsed(expected)
     }
   }
 
   test("test_parse_endStringMatch_EmptyUTC") {
-    provider_offsets.foreach {
-      case (pattern, parse, expected) =>
-        super.beforeEach()
-        val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
-          new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("", pattern)
-        val result: Int                                            = pp.parse(parseContext, "OTHER" + parse, 5)
-        assertEquals(result, parse.length + 5)
-        assertParsed(expected)
-      case _                          =>
-        fail()
+    provider_offsets.foreach { case (pattern, parse, expected) =>
+      super.beforeEach()
+      val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
+        new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("", pattern)
+      val result: Int                                            = pp.parse(parseContext, "OTHER" + parse, 5)
+      assertEquals(result, parse.length + 5)
+      assertParsed(expected)
     }
   }
 
@@ -330,16 +303,13 @@ class TestZoneOffsetParser extends AnyFunSuite with GenTestPrinterParser with As
     )
 
   test("test_parse_bigOffsets") {
-    provider_bigOffsets.foreach {
-      case (pattern, parse, offsetSecs) =>
-        super.beforeEach()
-        val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
-          new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("Z", pattern)
-        val result: Int                                            = pp.parse(parseContext, parse, 0)
-        assertEquals(result, parse.length)
-        assertEquals(parseContext.getParsed(OFFSET_SECONDS), offsetSecs.asInstanceOf[Long])
-      case _                            =>
-        fail()
+    provider_bigOffsets.foreach { case (pattern, parse, offsetSecs) =>
+      super.beforeEach()
+      val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
+        new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("Z", pattern)
+      val result: Int                                            = pp.parse(parseContext, parse, 0)
+      assertEquals(result, parse.length)
+      assertEquals(parseContext.getParsed(OFFSET_SECONDS), offsetSecs.asInstanceOf[Long])
     }
   }
 
@@ -398,14 +368,11 @@ class TestZoneOffsetParser extends AnyFunSuite with GenTestPrinterParser with As
     )
 
   test("test_parse_invalid") {
-    provider_badOffsets.foreach {
-      case (pattern, parse, expectedPosition) =>
-        val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
-          new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("Z", pattern)
-        val result: Int                                            = pp.parse(parseContext, parse, 0)
-        assertEquals(result, expectedPosition)
-      case _                                  =>
-        fail()
+    provider_badOffsets.foreach { case (pattern, parse, expectedPosition) =>
+      val pp: TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser =
+        new TTBPDateTimeFormatterBuilder.OffsetIdPrinterParser("Z", pattern)
+      val result: Int                                            = pp.parse(parseContext, parse, 0)
+      assertEquals(result, expectedPosition)
     }
   }
 

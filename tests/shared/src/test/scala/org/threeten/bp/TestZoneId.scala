@@ -1245,12 +1245,9 @@ class TestZoneId extends AnyFunSuite with AssertionsHelper {
     )
 
   test("toString") {
-    data_toString.foreach {
-      case (id: String, expected: String) =>
-        val test: ZoneId = ZoneId.of(id)
-        assertEquals(test.toString, expected)
-      case _                              =>
-        fail()
+    data_toString.foreach { case (id: String, expected: String) =>
+      val test: ZoneId = ZoneId.of(id)
+      assertEquals(test.toString, expected)
     }
   }
 

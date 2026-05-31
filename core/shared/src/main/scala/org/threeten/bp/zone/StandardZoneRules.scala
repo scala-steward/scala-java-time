@@ -277,10 +277,13 @@ final class StandardZoneRules private (
     ) {
       val transArray: Array[ZoneOffsetTransition]        = findTransitionArray(dt.getYear)
       var info: Either[ZoneOffsetTransition, ZoneOffset] = null
-      for (trans <- transArray) {
+      var i: Int = 0
+      while (i < transArray.length) {
+        val trans = transArray(i)
         info = findOffsetInfo(dt, trans)
         if (info.isLeft || (info == Right(trans.getOffsetBefore)))
           return info
+        i += 1
       }
       return info
     }
@@ -396,9 +399,13 @@ final class StandardZoneRules private (
         return null
       val year: Int                               = findYear(epochSec, wallOffsets(wallOffsets.length - 1))
       var transArray: Array[ZoneOffsetTransition] = findTransitionArray(year)
-      for (trans <- transArray)
+      var i: Int                                  = 0
+      while (i < transArray.length) {
+        val trans = transArray(i)
         if (epochSec < trans.toEpochSecond)
           return trans
+        i += 1
+      }
       if (year < Year.MAX_VALUE) {
         transArray = findTransitionArray(year + 1)
         return transArray(0)

@@ -1408,11 +1408,14 @@ final class DateTimeFormatter private[format] (
     try {
       val builder: DateTimeBuilder =
         parseToBuilder(text, null).resolve(resolverStyle, resolverFields)
-      for (tpe <- types)
+      val it = types.iterator
+      while (it.hasNext) {
+        val tpe = it.next()
         try return builder.build(tpe).asInstanceOf[TemporalAccessor]
         catch {
           case _: RuntimeException =>
         }
+      }
       throw new DateTimeException(
         s"Unable to convert parsed text to any specified type: ${types.mkString("[", ", ", "]")}"
       )

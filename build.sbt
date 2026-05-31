@@ -63,30 +63,17 @@ lazy val commonSettings = Seq(
   },
   Compile / scalacOptions ++= {
     CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, scalaMajor)) if scalaMajor == 13 =>
-        Seq("-deprecation:false")
-      case _                                         =>
+      case Some((2, 12)) =>
         Seq.empty
+      case _             =>
+        Seq(
+          "-Wconf:msg=object JavaConverters in package .+ is deprecated:s",
+          "-Wconf:msg=method mapValues in trait MapOps is deprecated:s",
+          "-Wconf:msg=Passing an explicit array value to a Scala varargs method is deprecated:s",
+        )
     }
   },
-  Compile / doc / scalacOptions   := {
-    CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, scalaMajor)) if scalaMajor >= 11 =>
-        Seq("-deprecation:false")
-      case _                                         =>
-        Seq.empty
-    }
-  },
-  scalacOptions --= {
-    if (tlIsScala3.value)
-      List(
-        "-Xfatal-warnings",
-        "-source:3.0-migration"
-      )
-    else
-      List(
-      )
-  },
+  scalacOptions ++= Seq("-Xfatal-warnings", "-deprecation", "-feature"),
   javaOptions ++= Seq("-Dfile.encoding=UTF8"),
   Compile / doc / sources         := Seq()
 )

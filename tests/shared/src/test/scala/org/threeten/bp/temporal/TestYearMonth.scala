@@ -57,7 +57,7 @@ class TestYearMonth extends GenDateTimeTest with BeforeAndAfter {
     List(MONTH_OF_YEAR, PROLEPTIC_MONTH, YEAR_OF_ERA, YEAR, ERA)
 
   protected def invalidFields: List[TemporalField] = {
-    val list: List[TemporalField] = List(ChronoField.values: _*)
+    val list: List[TemporalField] = ChronoField.values.toList
     (list :+ JulianFields.JULIAN_DAY :+ JulianFields.MODIFIED_JULIAN_DAY :+ JulianFields.RATA_DIE)
       .filterNot(validFields.contains)
   }
@@ -221,7 +221,7 @@ class TestYearMonth extends GenDateTimeTest with BeforeAndAfter {
       ("-1234-03", YearMonth.of(-1234, 3)),
       ("-12345678-03", YearMonth.of(-12345678, 3)),
       ("+" + Year.MAX_VALUE + "-03", YearMonth.of(Year.MAX_VALUE, 3)),
-      (Year.MIN_VALUE + "-03", YearMonth.of(Year.MIN_VALUE, 3))
+      (s"${Year.MIN_VALUE}-03", YearMonth.of(Year.MIN_VALUE, 3))
     )
 
   test("factory_parse_success") {

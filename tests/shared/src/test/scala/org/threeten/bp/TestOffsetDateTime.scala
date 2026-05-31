@@ -143,7 +143,7 @@ class TestOffsetDateTime
     )
 
   protected def invalidFields: List[TemporalField] =
-    List(ChronoField.values: _*).filterNot(validFields.contains)
+    ChronoField.values.toList.filterNot(validFields.contains)
 
   test("now") {
     var expected: OffsetDateTime = OffsetDateTime.now(Clock.systemDefaultZone)

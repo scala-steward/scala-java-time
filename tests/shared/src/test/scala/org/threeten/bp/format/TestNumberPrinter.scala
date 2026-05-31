@@ -142,141 +142,126 @@ class TestNumberPrinter extends AnyFunSuite with GenTestPrinterParser with Asser
     )
 
   test("pad_NOT_NEGATIVE") {
-    provider_pad.foreach {
-      case (minPad, maxPad, value, result) =>
-        super.beforeEach()
-        printContext.setDateTime(new MockFieldValue(DAY_OF_MONTH, value))
-        val pp: TTBPDateTimeFormatterBuilder.NumberPrinterParser =
-          new TTBPDateTimeFormatterBuilder.NumberPrinterParser(DAY_OF_MONTH,
-                                                               minPad,
-                                                               maxPad,
-                                                               SignStyle.NOT_NEGATIVE
-          )
-        try {
-          pp.print(printContext, buf)
+    provider_pad.foreach { case (minPad, maxPad, value, result) =>
+      super.beforeEach()
+      printContext.setDateTime(new MockFieldValue(DAY_OF_MONTH, value))
+      val pp: TTBPDateTimeFormatterBuilder.NumberPrinterParser =
+        new TTBPDateTimeFormatterBuilder.NumberPrinterParser(DAY_OF_MONTH,
+                                                             minPad,
+                                                             maxPad,
+                                                             SignStyle.NOT_NEGATIVE
+        )
+      try {
+        pp.print(printContext, buf)
+        if (result == null || value < 0)
+          fail("Expected exception")
+        assertEquals(buf.toString, result)
+      } catch {
+        case ex: DateTimeException =>
           if (result == null || value < 0)
-            fail("Expected exception")
-          assertEquals(buf.toString, result)
-        } catch {
-          case ex: DateTimeException =>
-            if (result == null || value < 0)
-              assertEquals(ex.getMessage.contains(DAY_OF_MONTH.toString), true)
-            else
-              throw ex
-        }
-      case _                               =>
-        fail()
+            assertEquals(ex.getMessage.contains(DAY_OF_MONTH.toString), true)
+          else
+            throw ex
+      }
     }
   }
 
   test("pad_NEVER") {
-    provider_pad.foreach {
-      case (minPad, maxPad, value, result) =>
-        super.beforeEach()
-        printContext.setDateTime(new MockFieldValue(DAY_OF_MONTH, value))
-        val pp: TTBPDateTimeFormatterBuilder.NumberPrinterParser =
-          new TTBPDateTimeFormatterBuilder.NumberPrinterParser(DAY_OF_MONTH,
-                                                               minPad,
-                                                               maxPad,
-                                                               SignStyle.NEVER
-          )
-        try {
-          pp.print(printContext, buf)
-          if (result == null)
-            fail("Expected exception")
-          assertEquals(buf.toString, result)
-        } catch {
-          case ex: DateTimeException =>
-            if (result != null)
-              throw ex
-            assertEquals(ex.getMessage.contains(DAY_OF_MONTH.toString), true)
-        }
-      case _                               =>
-        fail()
+    provider_pad.foreach { case (minPad, maxPad, value, result) =>
+      super.beforeEach()
+      printContext.setDateTime(new MockFieldValue(DAY_OF_MONTH, value))
+      val pp: TTBPDateTimeFormatterBuilder.NumberPrinterParser =
+        new TTBPDateTimeFormatterBuilder.NumberPrinterParser(DAY_OF_MONTH,
+                                                             minPad,
+                                                             maxPad,
+                                                             SignStyle.NEVER
+        )
+      try {
+        pp.print(printContext, buf)
+        if (result == null)
+          fail("Expected exception")
+        assertEquals(buf.toString, result)
+      } catch {
+        case ex: DateTimeException =>
+          if (result != null)
+            throw ex
+          assertEquals(ex.getMessage.contains(DAY_OF_MONTH.toString), true)
+      }
     }
   }
 
   test("pad_NORMAL") {
-    provider_pad.foreach {
-      case (minPad, maxPad, value, result) =>
-        super.beforeEach()
-        printContext.setDateTime(new MockFieldValue(DAY_OF_MONTH, value))
-        val pp: TTBPDateTimeFormatterBuilder.NumberPrinterParser =
-          new TTBPDateTimeFormatterBuilder.NumberPrinterParser(DAY_OF_MONTH,
-                                                               minPad,
-                                                               maxPad,
-                                                               SignStyle.NORMAL
-          )
-        try {
-          pp.print(printContext, buf)
-          if (result == null)
-            fail("Expected exception")
-          assertEquals(buf.toString, if (value < 0) "-" + result else result)
-        } catch {
-          case ex: DateTimeException =>
-            if (result != null)
-              throw ex
-            assertEquals(ex.getMessage.contains(DAY_OF_MONTH.toString), true)
-        }
-      case _                               =>
-        fail()
+    provider_pad.foreach { case (minPad, maxPad, value, result) =>
+      super.beforeEach()
+      printContext.setDateTime(new MockFieldValue(DAY_OF_MONTH, value))
+      val pp: TTBPDateTimeFormatterBuilder.NumberPrinterParser =
+        new TTBPDateTimeFormatterBuilder.NumberPrinterParser(DAY_OF_MONTH,
+                                                             minPad,
+                                                             maxPad,
+                                                             SignStyle.NORMAL
+        )
+      try {
+        pp.print(printContext, buf)
+        if (result == null)
+          fail("Expected exception")
+        assertEquals(buf.toString, if (value < 0) "-" + result else result)
+      } catch {
+        case ex: DateTimeException =>
+          if (result != null)
+            throw ex
+          assertEquals(ex.getMessage.contains(DAY_OF_MONTH.toString), true)
+      }
     }
   }
 
   test("pad_ALWAYS") {
-    provider_pad.foreach {
-      case (minPad, maxPad, value, result) =>
-        super.beforeEach()
-        printContext.setDateTime(new MockFieldValue(DAY_OF_MONTH, value))
-        val pp: TTBPDateTimeFormatterBuilder.NumberPrinterParser =
-          new TTBPDateTimeFormatterBuilder.NumberPrinterParser(DAY_OF_MONTH,
-                                                               minPad,
-                                                               maxPad,
-                                                               SignStyle.ALWAYS
-          )
-        try {
-          pp.print(printContext, buf)
-          if (result == null)
-            fail("Expected exception")
-          assertEquals(buf.toString, if (value < 0) "-" + result else "+" + result)
-        } catch {
-          case ex: DateTimeException =>
-            if (result != null)
-              throw ex
-            assertEquals(ex.getMessage.contains(DAY_OF_MONTH.toString), true)
-        }
-      case _                               =>
-        fail()
+    provider_pad.foreach { case (minPad, maxPad, value, result) =>
+      super.beforeEach()
+      printContext.setDateTime(new MockFieldValue(DAY_OF_MONTH, value))
+      val pp: TTBPDateTimeFormatterBuilder.NumberPrinterParser =
+        new TTBPDateTimeFormatterBuilder.NumberPrinterParser(DAY_OF_MONTH,
+                                                             minPad,
+                                                             maxPad,
+                                                             SignStyle.ALWAYS
+        )
+      try {
+        pp.print(printContext, buf)
+        if (result == null)
+          fail("Expected exception")
+        assertEquals(buf.toString, if (value < 0) "-" + result else "+" + result)
+      } catch {
+        case ex: DateTimeException =>
+          if (result != null)
+            throw ex
+          assertEquals(ex.getMessage.contains(DAY_OF_MONTH.toString), true)
+      }
     }
   }
 
   test("pad_EXCEEDS_PAD") {
-    provider_pad.foreach {
-      case (minPad, maxPad, value, result) =>
-        super.beforeEach()
-        var _result                                              = result
-        printContext.setDateTime(new MockFieldValue(DAY_OF_MONTH, value))
-        val pp: TTBPDateTimeFormatterBuilder.NumberPrinterParser =
-          new TTBPDateTimeFormatterBuilder.NumberPrinterParser(DAY_OF_MONTH,
-                                                               minPad,
-                                                               maxPad,
-                                                               SignStyle.EXCEEDS_PAD
-          )
-        try {
-          pp.print(printContext, buf)
-          if (_result == null)
-            fail("Expected exception")
-          if (_result.length > minPad || value < 0)
-            _result = if (value < 0) "-" + _result else "+" + _result
-          assertEquals(buf.toString, _result)
-        } catch {
-          case ex: DateTimeException =>
-            if (_result != null)
-              throw ex
-            assertEquals(ex.getMessage.contains(DAY_OF_MONTH.toString), true)
-        }
-      case _                               =>
-        fail()
+    provider_pad.foreach { case (minPad, maxPad, value, result) =>
+      super.beforeEach()
+      var _result                                              = result
+      printContext.setDateTime(new MockFieldValue(DAY_OF_MONTH, value))
+      val pp: TTBPDateTimeFormatterBuilder.NumberPrinterParser =
+        new TTBPDateTimeFormatterBuilder.NumberPrinterParser(DAY_OF_MONTH,
+                                                             minPad,
+                                                             maxPad,
+                                                             SignStyle.EXCEEDS_PAD
+        )
+      try {
+        pp.print(printContext, buf)
+        if (_result == null)
+          fail("Expected exception")
+        if (_result.length > minPad || value < 0)
+          _result = if (value < 0) "-" + _result else "+" + _result
+        assertEquals(buf.toString, _result)
+      } catch {
+        case ex: DateTimeException =>
+          if (_result != null)
+            throw ex
+          assertEquals(ex.getMessage.contains(DAY_OF_MONTH.toString), true)
+      }
     }
   }
 

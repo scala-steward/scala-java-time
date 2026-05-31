@@ -85,15 +85,12 @@ class TestStringLiteralParser extends AnyFunSuite with GenTestPrinterParser with
     )
 
   test("test_parse_success") {
-    data_success.foreach {
-      case (pp, caseSensitive, text, pos, expectedPos) =>
-        parseContext.setCaseSensitive(caseSensitive)
-        val result: Int = pp.parse(parseContext, text, pos)
-        assertEquals(result, expectedPos)
-        assertEquals(parseContext.toParsed.query(TemporalQueries.chronology), null)
-        assertEquals(parseContext.toParsed.query(TemporalQueries.zoneId), null)
-      case _                                           =>
-        fail()
+    data_success.foreach { case (pp, caseSensitive, text, pos, expectedPos) =>
+      parseContext.setCaseSensitive(caseSensitive)
+      val result: Int = pp.parse(parseContext, text, pos)
+      assertEquals(result, expectedPos)
+      assertEquals(parseContext.toParsed.query(TemporalQueries.chronology), null)
+      assertEquals(parseContext.toParsed.query(TemporalQueries.zoneId), null)
     }
   }
 
@@ -113,17 +110,14 @@ class TestStringLiteralParser extends AnyFunSuite with GenTestPrinterParser with
     )
 
   test("test_parse_error") {
-    data_error.foreach {
-      case (pp, text, pos, expected) =>
-        try pp.parse(parseContext, text, pos)
-        catch {
-          case ex: RuntimeException =>
-            assertTrue(expected.isInstance(ex))
-            assertEquals(parseContext.toParsed.query(TemporalQueries.chronology), null)
-            assertEquals(parseContext.toParsed.query(TemporalQueries.zoneId), null)
-        }
-      case _                         =>
-        fail()
+    data_error.foreach { case (pp, text, pos, expected) =>
+      try pp.parse(parseContext, text, pos)
+      catch {
+        case ex: RuntimeException =>
+          assertTrue(expected.isInstance(ex))
+          assertEquals(parseContext.toParsed.query(TemporalQueries.chronology), null)
+          assertEquals(parseContext.toParsed.query(TemporalQueries.zoneId), null)
+      }
     }
   }
 }

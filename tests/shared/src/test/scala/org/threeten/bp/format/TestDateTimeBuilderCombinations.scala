@@ -140,8 +140,6 @@ class TestDateTimeBuilderCombinations extends AnyFunSuite with AssertionsHelper 
           builder.addFieldValue(field4, value4.longValue)
         builder.resolve(ResolverStyle.SMART, null)
         assertEquals(builder.build(query), expectedVal)
-      case _                                                                                    =>
-        fail()
     }
   }
 
@@ -177,8 +175,6 @@ class TestDateTimeBuilderCombinations extends AnyFunSuite with AssertionsHelper 
           assertEquals(builder.getLong(query), expectedVal.longValue)
         else
           assertEquals(builder.isSupported(query), false)
-      case _                                                                    =>
-        fail()
     }
   }
 
