@@ -1,5 +1,5 @@
 val scala213 = "2.13.18"
-val scala3   = "3.3.7"
+val scala3   = "3.3.8"
 ThisBuild / scalaVersion       := scala213
 ThisBuild / crossScalaVersions := Seq("2.12.21", scala213, scala3)
 
@@ -69,7 +69,7 @@ lazy val commonSettings = Seq(
         Seq(
           "-Wconf:msg=object JavaConverters in package .+ is deprecated:s",
           "-Wconf:msg=method mapValues in trait MapOps is deprecated:s",
-          "-Wconf:msg=Passing an explicit array value to a Scala varargs method is deprecated:s",
+          "-Wconf:msg=Passing an explicit array value to a Scala varargs method is deprecated:s"
         )
     }
   },
