@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.CheckedBehavior
 
-val scala213 = "2.13.18"
+val scala213 = "3.9.0"
 val scala3   = "3.3.8"
 ThisBuild / scalaVersion       := scala213
 ThisBuild / crossScalaVersions := Seq("2.12.21", scala213, scala3)
